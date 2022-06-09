@@ -7,6 +7,8 @@ export const NavBar = () => {
   return (
     <nav>
       <Link to="/">Home</Link>
+      <Link to={`/my-profile/${parseInt(localStorage.getItem("auth_token"))}`}>My Profile</Link>
+      
       {
         localStorage.getItem("auth_token") !== null ?
           <button onClick={() => {
