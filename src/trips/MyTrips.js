@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { getMyTrips } from "./TripManager";
 
 
 export const MyTrips = () => {
     //use the useState hook function to set the initial value of the new object
     const [trips, setTrips] = useState([]);
-    // const history = useHistory()
+    const history = useHistory()
 
     useEffect(
         () => {
@@ -20,8 +20,9 @@ export const MyTrips = () => {
     
     return (
         <>
-        <h2>All of Your Trips</h2>
+        <h2>All of My Trips</h2>
         <section className="tripList">
+        <button onClick={() => history.push("/add-trip")}>Add a New Trip</button>
         {/* <h3>Completed Trips</h3> */}
         {
             trips.map((trip) => {
@@ -31,6 +32,11 @@ export const MyTrips = () => {
                     <div><b>Where:</b> {trip.city?.name}, {trip.state?.name} </div>
                     <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
                     <div><b>What:</b> {trip.about} </div>
+                    <div><b>Activities:</b>
+                    {
+                        trip.activities?.map(a => <li>{a.title}</li>)
+                    }
+                    </div>
                 </section>
             })
         }
