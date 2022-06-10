@@ -7,7 +7,9 @@ export const NavBar = () => {
   return (
     <nav>
       <Link to="/">Home</Link>
-      <Link to={`/my-profile/${parseInt(localStorage.getItem("auth_token"))}`}>My Profile</Link>
+      <Link to="/my-profile">My Profile</Link>
+      <Link to="/my-trips">My Trips</Link>
+      {/* <Link to="/">All Trips</Link> */}
       
       {
         localStorage.getItem("auth_token") !== null ?

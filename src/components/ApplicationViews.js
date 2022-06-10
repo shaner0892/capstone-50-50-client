@@ -19,7 +19,7 @@ export const ApplicationViews = () => {
             <Route path="/add-trip">
                 <AddTrip />
             </Route>
-            <Route exact path="/my-profile/:userId(\d+)">
+            <Route exact path="/my-profile">
                 <MyProfile />
             </Route>
             <Route path="/my-profile/:userId(\d+)/edit">
