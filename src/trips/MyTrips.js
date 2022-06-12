@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getMyTrips } from "./TripManager";
+import { deleteTrip, getMyTrips } from "./TripManager";
 
 
 export const MyTrips = () => {
@@ -17,6 +17,17 @@ export const MyTrips = () => {
         },
         []
     )
+    //define a function to delete a trip
+    //invoke the DELETE method and then fetch the new list of trips
+    const removeTrip = (id) => {
+        deleteTrip(id)
+            .then(()=> {
+                getMyTrips()
+                    .then((trips) => {
+                        setTrips(trips)
+                    })
+            })
+    }
     
     return (
         <>
@@ -37,6 +48,8 @@ export const MyTrips = () => {
                         trip.activities?.map(a => <li>{a.title}</li>)
                     }
                     </div>
+                    <button onClick={() => history.push(`/edit-trip/${trip.id}`)}>Edit Trip</button>
+                    <button id="btn" onClick={() => {removeTrip(trip.id)}}> Delete Trip </button>
                 </section>
             })
         }

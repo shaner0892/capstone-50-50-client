@@ -17,6 +17,8 @@ export const AddTrip = () => {
     const history = useHistory()
     const [tripActivities, setTripActivities] = useState([])
 
+    const [state, setState] = useState("")
+
     useEffect(
         () => {
             getStates()
@@ -28,7 +30,7 @@ export const AddTrip = () => {
     )
     useEffect(
         () => {
-            getCities()
+            getCities(state)
                 .then((cities) => {
                     setCities(cities)
                 })
@@ -53,6 +55,12 @@ export const AddTrip = () => {
         },
         []
     )
+    //clear the filters by resetting the state
+    const clearFilters = (e) => {
+        e.preventDefault()
+        setState("")
+    }
+
     //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
     const [trip, setTrip] = useState({
         state: 0,
@@ -105,6 +113,7 @@ export const AddTrip = () => {
                 <div className="form-group">
                     <label> Destination: </label>
                     <select name="state" className="form-control"
+                    // need to add onChange={e => setState(e.target.value)}
                         onChange={updateTripState}>
                         <option value="0">State</option>
                             {states.map((state) => {
