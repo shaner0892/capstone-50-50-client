@@ -43,6 +43,13 @@ export const EditMyProfile = (props) => {
         copy[evt.target.id] = evt.target.value
         setUser(copy)
     }
+    //when the user confirms they want to deactivate their account it needs to set is_active to false
+    //also needs to log the user out and reroute them to the login page
+    const deactivate = () => {
+        const copy = {...user}
+        copy.user.is_active = false
+        setUser(copy)
+}
 
     //this will be the form you display, you need to capture user input and update the user object
     //add values to each input to display previous user input
@@ -81,6 +88,8 @@ export const EditMyProfile = (props) => {
                 </fieldset>
                 <fieldset>
                     <button id="btn" outline type="submit"> Save </button>
+                    <button id="btn" onClick={() => window.confirm('Are you sure you wish to deactivate your account?') ? deactivate(user.user.id)("confirm") 
+                    : ("cancel") }> Deactivate My Account </button>
                 </fieldset>
             </form>
         </main>

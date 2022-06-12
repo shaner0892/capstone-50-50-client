@@ -7,6 +7,7 @@ export const NavBar = () => {
   return (
     <nav>
       <Link to="/">Home</Link>
+      {/* my-profile/ needs to have user id */}
       <Link to="/my-profile">My Profile</Link>
       <Link to="/my-trips">My Trips</Link>
       {/* <Link to="/">All Trips</Link> */}

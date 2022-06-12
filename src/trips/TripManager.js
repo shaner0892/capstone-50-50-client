@@ -38,6 +38,26 @@ export const postTrip = (newTrip) => {
     })
 }
 
+export const putTrip = (tripId, trip) => {
+    return fetch(`${API}/trips/${tripId}`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(trip)
+    })
+}
+
+export const deleteTrip = (tripId) => {
+    return fetch(`${API}/trips/${tripId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`,
+        }
+    })
+}
+
 export const getCategories = () => {
     return fetch(`${API}/categories`, {
         headers:{
