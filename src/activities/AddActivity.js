@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { getCategories } from "../trips/TripManager";
 import { getStates } from "../states/StateManager";
-import { getCities } from "../cities/CityManager";
 import { postActivity } from './ActivityManager';
 
 
 export const AddActivity = ({tripActivities, setTripActivities}) => {
     //use the useState hook function to set the initial value of the new object
     const [states, setStates] = useState([])
-    const [cities, setCities] = useState([])
     const [categories, setCategories] = useState([])
     
     useEffect(
@@ -16,15 +14,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             getStates()
                 .then((states) => {
                     setStates(states)
-                })
-        },
-        []
-    )
-    useEffect(
-        () => {
-            getCities()
-                .then((cities) => {
-                    setCities(cities)
                 })
         },
         []
@@ -43,7 +32,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
     const [activity, setActivity] = useState({
         title: "",
         state: 0,
-        city: 0,
+        city: "",
         specific_location: "",
         category: 0,
         is_approved: false
@@ -71,7 +60,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         postActivity(newActivity)
             .then((res) => {
                 let copy = [...tripActivities]
-                copy.push(res.id)
+                copy.push(res)
                 setTripActivities(copy)
             })
     }
@@ -81,7 +70,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
     return (
         <>
         <form className="activityForm">
-            {/* <h5 className="activityForm__title">Add a New Activity</h5> */}
             <fieldset>
                 <div className="form-group">
                     <label> Title: </label>
@@ -94,21 +82,16 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             <fieldset>
                 <div className="form-group">
                     <label> Location: </label>
+                    <input name="city" className="form-control"
+                        placeholder="City Name"
+                        onChange={updateActivity}
+                        /> 
                     <select name="state" className="form-control"
                         onChange={updateActivity}
                         >
                         <option value="0">State</option>
                             {states.map((state) => {
                                 return <option value={state.id}>{state.name}</option>
-                            })}
-                    </select> 
-                    {/* need to change the city drop down to only show the cities in the selected state */}
-                    <select name="city" className="form-control"
-                        onChange={updateActivity}
-                        >
-                        <option value="0">City</option>
-                            {cities.map((city) => {
-                                return <option value={city.id}>{city.name}</option>
                             })}
                     </select> 
                 </div>

@@ -13,9 +13,7 @@ export const StateDetails = () => {
     useEffect(
         () => {
             getSingleState(stateId)
-                .then((state) => {
-                    setState(state)
-                })
+                .then(setState)
         },
         []
     )

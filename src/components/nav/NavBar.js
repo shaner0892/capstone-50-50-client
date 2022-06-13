@@ -4,13 +4,14 @@ import "./NavBar.css"
 
 export const NavBar = () => {
   const history = useHistory()
+
   return (
     <nav>
       <Link to="/">Home</Link>
+      <Link to="/all-trips">All Trips</Link>
       {/* my-profile/ needs to have user id */}
       <Link to="/my-profile">My Profile</Link>
       <Link to="/my-trips">My Trips</Link>
-      {/* <Link to="/">All Trips</Link> */}
       
       {
         localStorage.getItem("auth_token") !== null ?
