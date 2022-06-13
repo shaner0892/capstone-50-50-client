@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { getCategories, getSingleTrip, postTrip, putTrip } from "./TripManager";
 // import { getCurrentUser } from "../users/UserManager";
 import { getStates } from "../states/StateManager";
-import { getCities } from "../cities/CityManager";
 import { getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
 import { useParams } from "react-router-dom";
@@ -12,7 +11,6 @@ import { useParams } from "react-router-dom";
 export const EditTrip = () => {
     //use the useState hook function to set the initial value of the new object
     const [states, setStates] = useState([])
-    const [cities, setCities] = useState([])
     const [categories, setCategories] = useState([])
     const [activities, setActivities] = useState([])
     const history = useHistory()
@@ -25,65 +23,37 @@ export const EditTrip = () => {
     useEffect(
         () => {
             getStates()
-                .then((states) => {
-                    setStates(states)
-                })
-        },
-        []
-    )
-    useEffect(
-        () => {
-            getCities(state)
-                .then((cities) => {
-                    setCities(cities)
-                })
-        },
-        []
-    )
-    useEffect(
-        () => {
+                .then(setStates)
             getCategories()
-                .then((categories) => {
-                    setCategories(categories)
-                })
-        },
-        []
-    )
-    useEffect(
-        () => {
+                .then(setCategories)
             getActivities()
-                .then((activities) => {
-                    setActivities(activities)
-                })
-        },
-        []
-    )
-    useEffect(
-        () => {
+                .then(setActivities)
             getSingleTrip(tripId)
-                .then((trip) => {
-                    setTrip(trip)
-                })
+                .then(setTrip)
         },
         []
     )
+    
     //clear the filters by resetting the state
     const clearFilters = (e) => {
         e.preventDefault()
         setState("")
     }
 
-
     const updateTripState = (evt) => {
-        const newTrip = Object.assign({}, trip)
-        newTrip[evt.target.name] = evt.target.value
-        setTrip(newTrip)
+        const editedTrip = Object.assign({}, trip)
+        if (evt.target.name === "activity"){
+            editedTrip[evt.target.name].push(parseInt(evt.target.value))
+        } else {
+            editedTrip[evt.target.name] = evt.target.value
+        }
+        setTrip(editedTrip)
     }
 
-    const pushActivity = (event) => {
-        let copy = [...tripActivities]
-        copy.push(event.target.value)
-        setTripActivities(copy)
+    const pushActivity = (evt) => {
+        evt.preventDefault()
+        let selectedActivities = activities.filter(activity => trip.activity.includes(activity.id))
+        setTripActivities(selectedActivities)
     }
 
     const editTrip = (evt) => {
@@ -101,7 +71,7 @@ export const EditTrip = () => {
             // rating: trip.rating
         }
 
-        putTrip(editedTrip)
+        putTrip(tripId, editedTrip)
             .then(() => history.push(`/my-trips`))
     }
     
@@ -113,20 +83,14 @@ export const EditTrip = () => {
             <fieldset>
                 <div className="form-group">
                     <label> Destination: </label>
+                    <input name="city" className="form-control" value={trip.city}
+                        onChange={updateTripState}/> 
                     <select name="state" className="form-control" value={trip.state?.id}
                     // need to add onChange={e => setState(e.target.value)}
                         onChange={updateTripState}>
                         <option value="0">State</option>
                             {states.map((state) => {
                                 return <option value={state.id}>{state.name}</option>
-                            })}
-                    </select> 
-                    {/* need to change the city drop down to only show the cities in the selected state */}
-                    <select name="city" className="form-control" value={trip.city?.id}
-                        onChange={updateTripState}>
-                        <option value="0">City</option>
-                            {cities.map((city) => {
-                                return <option value={city.id}>{city.name}</option>
                             })}
                     </select> 
                 </div>
@@ -153,30 +117,36 @@ export const EditTrip = () => {
                     <textarea id="form-about" cols="40" rows="5" value={trip.about}
                         type="text" name="about"
                         className="form-control"
-                        placeholder="Tell us about your trip"
                         onChange={updateTripState} >
                     </textarea>
                 </div>
             </fieldset>
-            {/* need to finish this section, current activities are not displaying */}
             <fieldset>
                 <div className="form-group">
+                <label> Add Your Activities: </label><br></br>
+                {/* need to display all of the activities the user has added and allow them to add multiple
+                currently this is not displaying the already added trip activities */}
+                {
+                    tripActivities ? tripActivities.map((tA) => {
+                        return <li>{tA.title}</li> }) : ""
+                }
                     <label> Choose from Existing Activities: </label><br></br>
                     <select name="category" className="form-control"
                         onChange={updateTripState}>
-                        <option value="0">Category</option>
+                            {/* above onchange doesn't need to be stored, only used for filtering purposes */}
+                        <option value="0">Filter by Category</option>
                             {categories.map((category) => {
                                 return <option value={category.id}>{category.name}</option>
                             })}
                     </select> 
-                    {/* need to change the city drop down to only show the cities in the selected state */}
                     <select name="activity" className="form-control"
-                        onChange={pushActivity}>
+                        onChange={updateTripState}>
                         <option value="0">Activity</option>
                             {activities.map((activity) => {
                                 return <option value={activity.id}>{activity.title} at {activity.specific_location}</option>
                             })}
                     </select> <br></br>
+                    <button id="btn" outline className="btn btn-addActivity" onClick={pushActivity} >Add</button><br></br>
                     <label> Or Create a New Activity: </label>
                     <AddActivity tripActivities={tripActivities} setTripActivities={setTripActivities} />
                     {/* <button id="btn" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</button> */}

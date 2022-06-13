@@ -11,9 +11,7 @@ export const AllTrips = () => {
     useEffect(
         () => {
             getTrips()
-                .then((trips) => {
-                    setTrips(trips)
-                })
+                .then(setTrips)
         },
         []
     )
@@ -23,10 +21,15 @@ export const AllTrips = () => {
         {
             trips.map((trip) => {
                 return <section className="trip" key={`trip--${trip.id}`}> 
-                <div>Trip #{trip.id} </div> 
-                <div>Who: {trip.fifty_user.username}</div>
-                <div>Where: {trip.state} </div>
-                <div>When: {trip.start_date} - {trip.end_date}</div>
+                <div><b>Trip #{trip.id}</b> </div> 
+                <div><b>Who:</b> {trip.fifty_user?.user?.username}</div>
+                <div><b>Where:</b> {trip.city}, {trip.state?.name} </div>
+                <div><b>When:</b> {trip.start_date} - {trip.end_date}</div>
+                <div><b>Activities:</b>
+                    {
+                        trip.activities?.map(a => <li>{a.title}</li>)
+                    }
+                    </div>
             </section>
             })
         }

@@ -16,10 +16,8 @@ export const MyProfile = () => {
     //fetch by id (/user/id)
     useEffect(
         () => {
-            getCurrentUser(userId)
-                .then((userObj) => {
-                    setUser(userObj)
-                })
+            getCurrentUser()
+                .then(setUser)
         },
         []
     )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { deleteTrip, getMyTrips } from "./TripManager";
+import { getMyTrips } from "./TripManager";
 
 
 export const MyTrips = () => {
@@ -11,23 +11,10 @@ export const MyTrips = () => {
     useEffect(
         () => {
             getMyTrips()
-                .then((tripObjects) => {
-                    setTrips(tripObjects)
-                })
+                .then(setTrips)
         },
         []
     )
-    //define a function to delete a trip
-    //invoke the DELETE method and then fetch the new list of trips
-    const removeTrip = (id) => {
-        deleteTrip(id)
-            .then(()=> {
-                getMyTrips()
-                    .then((trips) => {
-                        setTrips(trips)
-                    })
-            })
-    }
     
     return (
         <>
@@ -38,9 +25,9 @@ export const MyTrips = () => {
         {
             trips.map((trip) => {
                 return <section className="trip" key={`trip--${trip.id}`}> 
-                    <div><b>Trip #{trip.id}</b> </div> 
+                    <h3 onClick={() => history.push(`/trip-details/${trip.id}`)}><b>Trip #{trip.id}</b></h3> 
                     {/* <div>Who: {trip.fifty_user?.user?.username}</div> */}
-                    <div><b>Where:</b> {trip.city?.name}, {trip.state?.name} </div>
+                    <div><b>Where:</b> {trip.city}, {trip.state?.name} </div>
                     <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
                     <div><b>What:</b> {trip.about} </div>
                     <div><b>Activities:</b>
@@ -48,8 +35,6 @@ export const MyTrips = () => {
                         trip.activities?.map(a => <li>{a.title}</li>)
                     }
                     </div>
-                    <button onClick={() => history.push(`/edit-trip/${trip.id}`)}>Edit Trip</button>
-                    <button id="btn" onClick={() => {removeTrip(trip.id)}}> Delete Trip </button>
                 </section>
             })
         }

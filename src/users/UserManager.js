@@ -9,8 +9,8 @@ export const getUsers = () => {
         .then(res => res.json())
 }
 
-export const getCurrentUser = (id) => {
-    return fetch(`${API}/fiftyusers/${id}`, {
+export const getCurrentUser = () => {
+    return fetch(`${API}/fiftyusers/id`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         }
