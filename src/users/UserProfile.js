@@ -9,7 +9,7 @@ export const MyProfile = () => {
     //use useState to define and update user
     const [user, setUser] = useState({})
     //use useParams to implement a single resource view
-    const { userId } = useParams()
+    // const { userId } = useParams()
     const history = useHistory()
     
     //use useEffect to monitor for updates to user
@@ -34,7 +34,7 @@ export const MyProfile = () => {
                 <div><b>Email:</b> {user.user?.email}</div>
                 <div><b>Location:</b> {user.location}</div>
                 <div><b>About me:</b> {user.bio}</div>
-                <button id="btn" onClick={() => history.push(`/my-profile/${userId}/edit`)}> Edit Profile </button>
+                <button id="btn" onClick={() => history.push(`/my-profile/edit`)}> Edit Profile </button>
             </section>
         </>
     )

@@ -17,3 +17,14 @@ export const getSingleState = (id) => {
     })
     .then((res) => res.json())
 }
+
+export const putState = (stateId, state) => {
+    return fetch(`${API}/states/${stateId}`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(state)
+    })
+}

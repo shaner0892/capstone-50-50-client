@@ -14,17 +14,18 @@ export const EditMyProfile = (props) => {
     //this function fetches the current user from local storage and invokes the setUser function to assign them to user
     //save all of the values you want to change to a single object/bring them to the same level so you can save them
     const existingUserCheck = () => {
-        getCurrentUser(userId)
-        .then(user => {
-            let currentUser = {
-                first_name : user.user.first_name,
-                last_name : user.user.last_name,
-                email : user.user.email,
-                username : user.user.username,
-                location : user.location,
-                bio : user.bio,
-                id : user.id
-            }
+        getCurrentUser()
+            .then(user => {
+                let currentUser = {
+                    first_name : user.user.first_name,
+                    last_name : user.user.last_name,
+                    email : user.user.email,
+                    username : user.user.username,
+                    location : user.location,
+                    bio : user.bio,
+                    is_active : true,
+                    id : user.id
+                }
             setUser(currentUser)})
     }
     useEffect(existingUserCheck, [])
@@ -34,7 +35,7 @@ export const EditMyProfile = (props) => {
         evt.preventDefault()
         putUser(user)
             // reroute the user back to their profile page
-            .then(() => history.push(`/my-profile/${userId}`))
+            .then(() => history.push(`/my-profile`))
     }
 
     //this function makes a copy of the user object and then each time the user makes a selection/input it passes it through the setUser function to update the user object
@@ -47,7 +48,7 @@ export const EditMyProfile = (props) => {
     //also needs to log the user out and reroute them to the login page
     const deactivate = () => {
         const copy = {...user}
-        copy.user.is_active = false
+        copy.is_active = false
         setUser(copy)
 }
 
@@ -88,7 +89,7 @@ export const EditMyProfile = (props) => {
                 </fieldset>
                 <fieldset>
                     <button id="btn" outline type="submit"> Save </button>
-                    <button id="btn" onClick={() => window.confirm('Are you sure you wish to deactivate your account?') ? deactivate(user.user.id)("confirm") 
+                    <button id="btn" onClick={() => window.confirm('Are you sure you wish to deactivate your account?') ? deactivate()(localStorage.removeItem("auth_token"))("confirm") 
                     : ("cancel") }> Deactivate My Account </button>
                 </fieldset>
             </form>
