@@ -30,8 +30,8 @@ export const TripDetails = () => {
         <>
         <h2>Trip #{trip.id}</h2>
         <section className="trip" key={`trip--${trip.id}`}> 
-            <div>Who: {trip.fifty_user?.user?.username}</div>
-            <div><b>Where:</b> {trip.city?.name}, {trip.state?.name} </div>
+            <div><b>Who:</b> {trip.fifty_user?.user?.username}</div>
+            <div><b>Where:</b> {trip.city}, {trip.state?.name} </div>
             <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
             <div><b>What:</b> {trip.about} </div>
             <div><b>Activities:</b>

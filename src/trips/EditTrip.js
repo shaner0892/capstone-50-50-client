@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getCategories, getSingleTrip, postTrip, putTrip } from "./TripManager";
-// import { getCurrentUser } from "../users/UserManager";
+import { getCategories, getSingleTrip, putTrip } from "./TripManager";
 import { getStates } from "../states/StateManager";
-import { getActivities } from "../activities/ActivityManager";
+import { deleteActivity, getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
 import { useParams } from "react-router-dom";
-
+// import Popup from "../components/Popup";
 
 export const EditTrip = () => {
     //use the useState hook function to set the initial value of the new object
@@ -15,10 +14,9 @@ export const EditTrip = () => {
     const [activities, setActivities] = useState([])
     const history = useHistory()
     const [tripActivities, setTripActivities] = useState([])    
-    const [state, setState] = useState("")
-    //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
     const [trip, setTrip] = useState({})
     const {tripId} = useParams()
+    // const [buttonPopup, setButtonPopup] = useState(false)
 
     useEffect(
         () => {
@@ -29,33 +27,41 @@ export const EditTrip = () => {
             getActivities()
                 .then(setActivities)
             getSingleTrip(tripId)
-                .then(setTrip)
+                .then((res) => {
+                    res.state=res.state.id
+                    setTripActivities(res.activities)
+                    setTrip(res)})
         },
         []
     )
-    
-    //clear the filters by resetting the state
-    const clearFilters = (e) => {
-        e.preventDefault()
-        setState("")
-    }
 
+    // const updateTripState = (evt) => {
+    //     const editedTrip = Object.assign({}, trip)
+    //     if (evt.target.name === "activity"){
+    //         editedTrip[evt.target.name].push(parseInt(evt.target.value))
+    //     } else {
+    //         editedTrip[evt.target.name] = evt.target.value
+    //     }
+    //     setTrip(editedTrip)
+    // }
+
+    //this updates the state as the user makes changes
+    //if they add an activity the id is pushed into the trip.activity array
     const updateTripState = (evt) => {
-        const editedTrip = Object.assign({}, trip)
-        if (evt.target.name === "activity"){
-            editedTrip[evt.target.name].push(parseInt(evt.target.value))
-        } else {
-            editedTrip[evt.target.name] = evt.target.value
-        }
-        setTrip(editedTrip)
+        const newTrip = Object.assign({}, trip)
+        newTrip[evt.target.name] = evt.target.value
+        setTrip(newTrip)
     }
 
+    //each time the user hits "add" activity we are adding the selected activity to display
     const pushActivity = (evt) => {
         evt.preventDefault()
-        let selectedActivities = activities.filter(activity => trip.activity.includes(activity.id))
-        setTripActivities(selectedActivities)
+        let selectedActivities = activities.filter(activity => parseInt(trip.activity) === activity.id)
+        // unpacking: taking the activity you just added and adding it to the activities that were already saved
+        setTripActivities([...selectedActivities, ...tripActivities])
     }
 
+    // this puts the new activity when the user hits submit
     const editTrip = (evt) => {
         //capture the evt (event) and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
@@ -67,16 +73,27 @@ export const EditTrip = () => {
             start_date: trip.start_date,
             end_date: trip.end_date,
             completed: trip.completed,
-            activity: tripActivities
+            // by mapping through you change it to an array of IDs
+            activity: tripActivities.map(tA => tA.id)
             // rating: trip.rating
         }
 
         putTrip(tripId, editedTrip)
             .then(() => history.push(`/my-trips`))
     }
-    
 
-    //this will be the form you display, you need to capture user input and save to new object
+    //define a function to delete a activity
+    //invoke the DELETE method and then fetch the new list of activities
+    const removeActivity = (evt, id) => {
+        evt.preventDefault()
+        deleteActivity(id)
+            .then(()=> {
+                getSingleTrip(tripId)
+                    .then(setTrip)
+            })
+    }
+    
+    //this will be the edit form you display, you need to capture user input and save to new object
     return (
         <form className="tripForm">
             <h2 className="tripForm__title">Edit Your Trip</h2>
@@ -85,9 +102,9 @@ export const EditTrip = () => {
                     <label> Destination: </label>
                     <input name="city" className="form-control" value={trip.city}
                         onChange={updateTripState}/> 
-                    <select name="state" className="form-control" value={trip.state?.id}
+                    <select name="state" className="form-control" value={trip.state}
                     // need to add onChange={e => setState(e.target.value)}
-                        onChange={updateTripState}>
+                    onChange={updateTripState}>
                         <option value="0">State</option>
                             {states.map((state) => {
                                 return <option value={state.id}>{state.name}</option>
@@ -123,17 +140,21 @@ export const EditTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                <label> Add Your Activities: </label><br></br>
-                {/* need to display all of the activities the user has added and allow them to add multiple
-                currently this is not displaying the already added trip activities */}
+                <label> Your Activities: </label><br></br>
                 {
                     tripActivities ? tripActivities.map((tA) => {
-                        return <li>{tA.title}</li> }) : ""
+                        return <section><li>{tA.title}</li> 
+                        <button onClick={() => history.push(`/edit-activity/${tA.id}`)}>Edit Activity</button>
+                        {/* <button onClick={() => setButtonPopup(true)}>Edit Activity</button>
+                        <Popup trigger={buttonPopup}>
+                            <h3>Popup window</h3>
+                        </Popup> */}
+                        <button id="btn" onClick={(evt) => {removeActivity(evt, tA.id)}}> Delete Activity </button>
+                        </section>}) : ""
                 }
+                <label> Add to Your Activities: </label><br></br>
                     <label> Choose from Existing Activities: </label><br></br>
-                    <select name="category" className="form-control"
-                        onChange={updateTripState}>
-                            {/* above onchange doesn't need to be stored, only used for filtering purposes */}
+                    <select name="category" className="form-control">
                         <option value="0">Filter by Category</option>
                             {categories.map((category) => {
                                 return <option value={category.id}>{category.name}</option>
@@ -143,7 +164,7 @@ export const EditTrip = () => {
                         onChange={updateTripState}>
                         <option value="0">Activity</option>
                             {activities.map((activity) => {
-                                return <option value={activity.id}>{activity.title} at {activity.specific_location}</option>
+                                return <option value={activity.id}>{activity.title}</option>
                             })}
                     </select> <br></br>
                     <button id="btn" outline className="btn btn-addActivity" onClick={pushActivity} >Add</button><br></br>
@@ -161,19 +182,10 @@ export const EditTrip = () => {
                         onChange={updateTripState}/>
                 </div>
             </fieldset>
-            {/* <fieldset>
-                <div className="form-group">
-                    <label htmlFor="sex">Have you already completed this trip?: </label>
-                        <input className="radio" type="radio" name="sex" value="Male" onChange={updateTrip}
-                        }/>Male
-                        <input className="radio" type="radio" name="sex" value="Female" onChange={updateTrip}
-                        }/>Female
-                </div>
-            </fieldset> */}
             {/* add a rating feature if the trip has been completed */}
             {/* <fieldset>
                 <div className="form-group">
-                    <UploadImages obj={dog} update={updateDog} />
+                <UploadImages obj={dog} update={updateDog} />
                 </div>
             </fieldset> */}
             <div>

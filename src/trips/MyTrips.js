@@ -4,7 +4,7 @@ import { getMyTrips } from "./TripManager";
 
 
 export const MyTrips = () => {
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial value of the user's trips array
     const [trips, setTrips] = useState([]);
     const history = useHistory()
 
@@ -28,8 +28,8 @@ export const MyTrips = () => {
                     <h3 onClick={() => history.push(`/trip-details/${trip.id}`)}><b>Trip #{trip.id}</b></h3> 
                     {/* <div>Who: {trip.fifty_user?.user?.username}</div> */}
                     <div><b>Where:</b> {trip.city}, {trip.state?.name} </div>
-                    <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
                     <div><b>What:</b> {trip.about} </div>
+                    <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
                     <div><b>Activities:</b>
                     {
                         trip.activities?.map(a => <li>{a.title}</li>)

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react"
 import { getCategories } from "../trips/TripManager";
 import { getStates } from "../states/StateManager";
-import { postActivity } from './ActivityManager';
+import { getSingleActivity, putActivity } from './ActivityManager';
 import { getCurrentUser } from "../users/UserManager";
 
 
-export const AddActivity = ({tripActivities, setTripActivities}) => {
+export const EditActivity = ({tripActivities, setTripActivities}) => {
+    //use the useState hook function to set the initial value of the new object
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
+    const [activity, setActivity] = useState({})
     const [user, setUser] = useState({})
     
     useEffect(
         () => {
+            getSingleActivity()
+                .then(setActivity)
             getStates()
                 .then(setStates)
             getCategories()
@@ -22,29 +26,19 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         []
     )
 
-    //useState hook function sets the initial value of the activity to the defined properties, set is the function you invoke later on to modify the values
-    const [activity, setActivity] = useState({
-        title: "",
-        state: 0,
-        city: "",
-        specific_location: "",
-        category: 0,
-        is_approved: false
-    });
-
     // each time the user makes a change this updates state
     const updateActivity = (evt) => {
-        const newActivity = Object.assign({}, activity)
-        newActivity[evt.target.name] = evt.target.value
-        setActivity(newActivity)
+        const editedActivity = Object.assign({}, activity)
+        editedActivity[evt.target.name] = evt.target.value
+        setActivity(editedActivity)
     }
 
-    // when the user submits the activity this posts it and adds the activity to the tripActivities
-    const addNewActivity = (evt) => {
+    // when the user saves the activity this puts it and adds the activity to the tripActivities
+    const addEditedActivity = (evt) => {
         //capture the evt (event) and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
-        const newActivity = {
+        const editedActivity = {
             title: activity.title,
             state: activity.state,
             city: activity.city,
@@ -53,36 +47,22 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             is_approved: activity.is_approved
         }
 
-        postActivity(newActivity)
+        putActivity(editedActivity)
             .then((res) => {
                 let copy = [...tripActivities]
                 copy.push(res)
                 setTripActivities(copy)
             })
     }
-
-    // this clears the filters when the user hits submit by resetting the state
-    const clearFilters = (evt) => {
-        evt.preventDefault()
-        setActivity({
-            title: "",
-            state: 0,
-            city: "",
-            specific_location: "",
-            category: 0,
-            is_approved: false
-        })
-    }
-
-    //this will be the form you display, you need to capture user input and save to new object
+    
+    //this will be the form you display, you need to capture user input and update the object
     return (
         <>
         <form className="activityForm">
             <fieldset>
                 <div className="form-group">
                     <label> Title: </label>
-                    <input name="title" value={activity.title} className="form-control"
-                        placeholder="Pint Night with my faves"
+                    <input name="title" className="form-control" value={activity.title}
                         onChange={updateActivity}
                         /> 
                     </div>
@@ -90,11 +70,10 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             <fieldset>
                 <div className="form-group">
                     <label> Location: </label>
-                    <input name="city" value={activity.city} className="form-control"
-                        placeholder="City Name"
+                    <input name="city" className="form-control" value={activity.city}
                         onChange={updateActivity}
                         /> 
-                    <select name="state" value={activity.state} className="form-control"
+                    <select name="state" className="form-control" value={activity.state?.id}
                         onChange={updateActivity}
                         >
                         <option value="0">State</option>
@@ -107,8 +86,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="specific_location">Specific Location: </label>
-                    <input name="specific_location" value={activity.specific_location} className="form-control"
-                        placeholder="Avondale Brewery"
+                    <input name="specific_location" className="form-control" value={activity.specific_location}
                         onChange={updateActivity} 
                         />
                 </div>
@@ -116,7 +94,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             <fieldset>
                 <div className="form-group">
                     <label> Category: </label>
-                    <select name="category" value={activity.category} className="form-control"
+                    <select name="category" className="form-control" value={activity.category?.id}
                         onChange={updateActivity}
                         >
                         <option value="0">Pick a Category</option>
@@ -132,7 +110,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                     <fieldset>
                         <div className="form-group">
                             <label htmlFor="is_approved">Is this activity approved? </label>
-                            <input neam="is_approved" type="checkbox" className="box" onChange={
+                            <input name="is_approved" checked={activity.is_approved ? "checked" : ""} type="checkbox" className="box" onChange={
                                     (evt) => {
                                         const copy = {...activity}
                                         copy.is_approved = evt.target.checked
@@ -144,10 +122,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                 : ""
             }
             <div>
-                <button id="btn" outline className="btn btn-addActivity" onClick={(evt) => {
-                    addNewActivity(evt) 
-                    clearFilters(evt)
-                }} >Add</button>
+                <button id="btn" outline className="btn btn-addActivity" onClick={addEditedActivity} >Add</button>
             </div>
         </form>
         </>

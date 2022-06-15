@@ -1,8 +1,8 @@
 import React from "react"
 import { Route } from "react-router-dom"
-import { AddCity } from "../cities/AddCity"
-import { CityList } from "../cities/CityList"
-import { EditCity } from "../cities/EditCity"
+import { EditActivity } from "../activities/EditActivity"
+import { AddCategory } from "../categories/AddCategory"
+import { EditState } from "../states/EditState"
 import { StateDetails } from "../states/StateDetails"
 import { AddTrip } from "../trips/AddTrip"
 import { AllTrips } from "../trips/AllTrips"
@@ -16,7 +16,6 @@ import { Map } from "./HomePage"
 export const ApplicationViews = () => {
     return <>
         <main>
-            50/50
             <Route exact path="/">
                 <Map />
             </Route>
@@ -41,17 +40,19 @@ export const ApplicationViews = () => {
             <Route exact path="/my-profile">
                 <MyProfile />
             </Route>
-            <Route path="/my-profile/:userId(\d+)/edit">
+            <Route path="/my-profile/edit">
                 <EditMyProfile />
             </Route>
-            <Route path="/all-cities">
-                <CityList />
+            
+            {/* admin only */}
+            <Route path="/edit-state/:stateId(\d+)">
+                <EditState />
             </Route>
-            <Route path="/add-city">
-                <AddCity />
+            <Route path="/add-category">
+                <AddCategory />
             </Route>
-            <Route path="/edit-city/:cityId(\d+)">
-                <EditCity />
+            <Route path="/edit-activity/:activityId(\d+)">
+                <EditActivity />
             </Route>
         </main>
     </>
