@@ -5,7 +5,8 @@ import { getStates } from "../states/StateManager";
 import { deleteActivity, getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
 import { useParams } from "react-router-dom";
-// import Popup from "../components/Popup";
+import Popup from "../components/Popup";
+import { EditActivity } from "../activities/EditActivity";
 
 export const EditTrip = () => {
     //use the useState hook function to set the initial value of the new object
@@ -16,7 +17,9 @@ export const EditTrip = () => {
     const [tripActivities, setTripActivities] = useState([])    
     const [trip, setTrip] = useState({})
     const {tripId} = useParams()
-    // const [buttonPopup, setButtonPopup] = useState(false)
+    const [buttonPopup, setButtonPopup] = useState(false)
+    const [tripRefresh, setTripRefresh] = useState(false)
+
 
     useEffect(
         () => {
@@ -32,7 +35,7 @@ export const EditTrip = () => {
                     setTripActivities(res.activities)
                     setTrip(res)})
         },
-        []
+        [tripRefresh]
     )
 
     // const updateTripState = (evt) => {
@@ -89,7 +92,10 @@ export const EditTrip = () => {
         deleteActivity(id)
             .then(()=> {
                 getSingleTrip(tripId)
-                    .then(setTrip)
+                    .then((res) => {
+                        res.state=res.state.id
+                        setTripActivities(res.activities)
+                        setTrip(res)})
             })
     }
     
@@ -144,11 +150,16 @@ export const EditTrip = () => {
                 {
                     tripActivities ? tripActivities.map((tA) => {
                         return <section><li>{tA.title}</li> 
-                        <button onClick={() => history.push(`/edit-activity/${tA.id}`)}>Edit Activity</button>
-                        {/* <button onClick={() => setButtonPopup(true)}>Edit Activity</button>
-                        <Popup trigger={buttonPopup}>
-                            <h3>Popup window</h3>
-                        </Popup> */}
+                    {/* edit button that opens a pop up window
+                    send in the id of the activity chosen 
+                    send in tripRefresh so you have the ability to update the form changes */}
+                    {/* !!!!!! change this so only unapproved activities can be edited */}
+                    <button id={tA.id} onClick={(e) => {
+                        e.preventDefault()
+                        setButtonPopup(e.target.id)}}>Edit Activity</button>
+                        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                            <EditActivity activityId={buttonPopup} setButtonPopUp={setButtonPopup} tripRefresh={tripRefresh} setTripRefresh={setTripRefresh} />
+                        </Popup>
                         <button id="btn" onClick={(evt) => {removeActivity(evt, tA.id)}}> Delete Activity </button>
                         </section>}) : ""
                 }
