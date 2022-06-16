@@ -30,8 +30,8 @@ export const postActivity = (newActivity) => {
     .then((res) => res.json())
 }
 
-export const putActivity = (activityId, activity) => {
-    return fetch(`${API}/activities/${activityId}`, {
+export const putActivity = (activity) => {
+    return fetch(`${API}/activities/${activity.id}`, {
         method: "PUT",
         headers: {
             "Authorization": `Token ${localStorage.getItem("auth_token")}`,

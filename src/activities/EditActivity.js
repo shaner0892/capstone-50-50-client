@@ -5,17 +5,22 @@ import { getSingleActivity, putActivity } from './ActivityManager';
 import { getCurrentUser } from "../users/UserManager";
 
 
-export const EditActivity = ({tripActivities, setTripActivities}) => {
+export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRefresh}) => {
+
     //use the useState hook function to set the initial value of the new object
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
     const [activity, setActivity] = useState({})
     const [user, setUser] = useState({})
     
+    // set state and category to the id only so you don't pass in the whole object
     useEffect(
         () => {
-            getSingleActivity()
-                .then(setActivity)
+            getSingleActivity(activityId)
+                .then((res) => {
+                    res.state = res.state.id
+                    res.category = res.category.id
+                    setActivity(res)})
             getStates()
                 .then(setStates)
             getCategories()
@@ -34,11 +39,12 @@ export const EditActivity = ({tripActivities, setTripActivities}) => {
     }
 
     // when the user saves the activity this puts it and adds the activity to the tripActivities
-    const addEditedActivity = (evt) => {
+    const saveEditedActivity = (evt) => {
         //capture the evt (event) and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedActivity = {
+            id: activity.id,
             title: activity.title,
             state: activity.state,
             city: activity.city,
@@ -46,12 +52,12 @@ export const EditActivity = ({tripActivities, setTripActivities}) => {
             category: activity.category,
             is_approved: activity.is_approved
         }
-
+        // bangtripRefresh toggles the set to true or false
+        // setButtonPop(false) closes the popup window
         putActivity(editedActivity)
-            .then((res) => {
-                let copy = [...tripActivities]
-                copy.push(res)
-                setTripActivities(copy)
+            .then(() => {
+                setTripRefresh(!tripRefresh)
+                setButtonPopUp(false)
             })
     }
     
@@ -73,7 +79,7 @@ export const EditActivity = ({tripActivities, setTripActivities}) => {
                     <input name="city" className="form-control" value={activity.city}
                         onChange={updateActivity}
                         /> 
-                    <select name="state" className="form-control" value={activity.state?.id}
+                    <select name="state" className="form-control" value={activity.state}
                         onChange={updateActivity}
                         >
                         <option value="0">State</option>
@@ -94,7 +100,7 @@ export const EditActivity = ({tripActivities, setTripActivities}) => {
             <fieldset>
                 <div className="form-group">
                     <label> Category: </label>
-                    <select name="category" className="form-control" value={activity.category?.id}
+                    <select name="category" className="form-control" value={activity.category}
                         onChange={updateActivity}
                         >
                         <option value="0">Pick a Category</option>
@@ -122,7 +128,7 @@ export const EditActivity = ({tripActivities, setTripActivities}) => {
                 : ""
             }
             <div>
-                <button id="btn" outline className="btn btn-addActivity" onClick={addEditedActivity} >Add</button>
+                <button id="btn" outline className="btn btn-editActivity" onClick={saveEditedActivity} >Save</button>
             </div>
         </form>
         </>
