@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from "react-router-dom"
+import UploadImages from "../pictures/PhotoUpload"
 import { getCurrentUser, putUser } from "./UserManager"
 
 //this is the edit user profile page
@@ -24,6 +25,7 @@ export const EditMyProfile = (props) => {
                     location : user.location,
                     bio : user.bio,
                     is_active : true,
+                    image_url : user.image_url,
                     id : user.id
                 }
             setUser(currentUser)})
@@ -50,6 +52,7 @@ export const EditMyProfile = (props) => {
         const copy = {...user}
         copy.is_active = false
         setUser(copy)
+        (localStorage.removeItem("auth_token"))
 }
 
     //this will be the form you display, you need to capture user input and update the user object
@@ -88,8 +91,13 @@ export const EditMyProfile = (props) => {
                     <textarea id="bio" value={user.bio} cols="40" rows="5" onChange={updateUser} type="text" className="form-control" ></textarea>
                 </fieldset>
                 <fieldset>
+                    <label htmlFor="image_url"> Profile Picture: </label><br></br>
+                    <img className="userProfilePic" src={user.image_url}/><br></br>
+                    <UploadImages obj={user} update={setUser} />
+                </fieldset>
+                <fieldset>
                     <button id="btn" outline type="submit"> Save </button>
-                    <button id="btn" onClick={() => window.confirm('Are you sure you wish to deactivate your account?') ? deactivate()(localStorage.removeItem("auth_token"))("confirm") 
+                    <button id="btn" onClick={() => window.confirm('Are you sure you wish to deactivate your account?') ? deactivate()("confirm") 
                     : ("cancel") }> Deactivate My Account </button>
                 </fieldset>
             </form>

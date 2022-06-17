@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react"
+import ReactStars from "react-rating-stars-component";
+import { render } from "react-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { getCategories, postTrip } from "./TripManager";
 import { getStates } from "../states/StateManager";
 import { getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
+// import UploadImages from "../pictures/PhotoUpload";
 
 
 export const AddTrip = () => {
@@ -13,6 +16,8 @@ export const AddTrip = () => {
     const [activities, setActivities] = useState([])
     const history = useHistory()
     const [tripActivities, setTripActivities] = useState([])
+    const [tripPictures, setTripPictures] = useState([])
+    const [rating, setRating] = useState({})
 
     useEffect(
         () => {
@@ -34,10 +39,10 @@ export const AddTrip = () => {
         start_date: "",
         end_date: "",
         completed: false,
-        activity: []
-        // rating: 0
+        activity: [],
+        rating: 0
     });
-
+    
     //this updates the state as the user makes changes
     //if they add an activity the id is pushed into the trip.activity array
     const updateTripState = (evt) => {
@@ -46,6 +51,9 @@ export const AddTrip = () => {
         setTrip(newTrip)
     }
 
+    const ratingChanged = (newRating) => {
+        setRating(newRating)
+    }
     //each time the user hits "add" activity we are adding the selected activity to display
     const pushActivity = (evt) => {
         evt.preventDefault()
@@ -67,12 +75,15 @@ export const AddTrip = () => {
             end_date: trip.end_date,
             completed: trip.completed,
             // by mapping through you change it to an array of IDs
-            activity: tripActivities.map(tA => tA.id)
-            // rating: trip.rating
+            activity: tripActivities.map(tA => tA.id),
+            // need to capture rating
+            rating: rating
         }
 
+        // ******this push doesn't work, the ID hasn't been created yet
         postTrip(newTrip)
-            .then(() => history.push(`/my-trips`))
+            .then((res) => res.json())
+            .then((res) => history.push(`/add-pictures/${res.id}`))
     }
     
     //this will be the form you display, you need to capture user input and save to new object
@@ -164,9 +175,20 @@ export const AddTrip = () => {
                 </div>
             </fieldset>
             {/* add a rating feature if the trip has been completed */}
+            <fieldset>
+                <div className="form-group">
+                <label htmlFor="rating">Rate Your Trip: </label>
+                    <ReactStars 
+                        count={5}
+                        onChange={ratingChanged}
+                        size={24}
+                        activeColor="#ffd700"
+                        />
+                </div>
+            </fieldset>
             {/* <fieldset>
                 <div className="form-group">
-                    <UploadImages obj={dog} update={updateDog} />
+                    <UploadImages obj={tripPictures} update={setTripPictures} />
                 </div>
             </fieldset> */}
             <div>

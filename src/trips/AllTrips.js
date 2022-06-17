@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import ReactStars from "react-rating-stars-component";
 import { getTrips } from "./TripManager";
 
 
@@ -33,7 +34,15 @@ export const AllTrips = () => {
                     trip.activities?.map(a => <li>{a.title}</li>)
                 }
                 </div>
-                {/* Add <div>{trip.rating}</div> */}
+                <div><b>Rating:</b>
+                    <ReactStars 
+                        count={5}
+                        edit={false}
+                        value={trip.rating}
+                        size={24}
+                        activeColor="#ffd700"
+                    />
+                </div>
             </section>
             })
         }
