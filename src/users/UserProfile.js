@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import { getCurrentUser } from "./UserManager";
+import "./User.css"
 
 //this module is responsible for displaying the current user's info
 
@@ -29,6 +30,7 @@ export const MyProfile = () => {
             need to add an edit and deactivate button */}
             <h2>{user.user?.first_name}'s Page</h2>
             <section className="userProfile">
+                <img className="userProfilePic" src={user.image_url}/>
                 <div><b>Full Name:</b> {user.user?.first_name} {user.user?.last_name}</div>
                 <div><b>Username:</b> {user.user?.username}</div>
                 <div><b>Email:</b> {user.user?.email}</div>

@@ -28,7 +28,7 @@ export const Register = () => {
         "location": location.current.value,
         "bio": bio.current.value,
         "password": password.current.value,
-        "image_url": ""
+        "image_url": "https://media.gettyimages.com/vectors/hiking-circular-logo-vector-id654094086"
       }
 
       registerUser(newUser).then(res => {

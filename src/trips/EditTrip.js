@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import ReactStars from "react-rating-stars-component";
 import { getCategories, getSingleTrip, putTrip } from "./TripManager";
 import { getStates } from "../states/StateManager";
 import { deleteActivity, getActivities } from "../activities/ActivityManager";
@@ -7,6 +8,7 @@ import { AddActivity } from "../activities/AddActivity";
 import { useParams } from "react-router-dom";
 import Popup from "../components/Popup";
 import { EditActivity } from "../activities/EditActivity";
+
 
 export const EditTrip = () => {
     //use the useState hook function to set the initial value of the new object
@@ -19,6 +21,7 @@ export const EditTrip = () => {
     const {tripId} = useParams()
     const [buttonPopup, setButtonPopup] = useState(false)
     const [tripRefresh, setTripRefresh] = useState(false)
+    const [rating, setRating] = useState({})
 
 
     useEffect(
@@ -38,22 +41,15 @@ export const EditTrip = () => {
         [tripRefresh]
     )
 
-    // const updateTripState = (evt) => {
-    //     const editedTrip = Object.assign({}, trip)
-    //     if (evt.target.name === "activity"){
-    //         editedTrip[evt.target.name].push(parseInt(evt.target.value))
-    //     } else {
-    //         editedTrip[evt.target.name] = evt.target.value
-    //     }
-    //     setTrip(editedTrip)
-    // }
-
     //this updates the state as the user makes changes
     //if they add an activity the id is pushed into the trip.activity array
     const updateTripState = (evt) => {
-        const newTrip = Object.assign({}, trip)
-        newTrip[evt.target.name] = evt.target.value
-        setTrip(newTrip)
+        const editedTrip = Object.assign({}, trip)
+        editedTrip[evt.target.name] = evt.target.value
+        setTrip(editedTrip)
+    }
+    const ratingChanged = (editedRating) => {
+        setRating(editedRating)
     }
 
     //each time the user hits "add" activity we are adding the selected activity to display
@@ -77,8 +73,8 @@ export const EditTrip = () => {
             end_date: trip.end_date,
             completed: trip.completed,
             // by mapping through you change it to an array of IDs
-            activity: tripActivities.map(tA => tA.id)
-            // rating: trip.rating
+            activity: tripActivities.map(tA => tA.id),
+            rating: rating
         }
 
         putTrip(tripId, editedTrip)
@@ -101,6 +97,7 @@ export const EditTrip = () => {
     
     //this will be the edit form you display, you need to capture user input and save to new object
     return (
+        <>
         <form className="tripForm">
             <h2 className="tripForm__title">Edit Your Trip</h2>
             <fieldset>
@@ -153,13 +150,15 @@ export const EditTrip = () => {
                     {/* edit button that opens a pop up window
                     send in the id of the activity chosen 
                     send in tripRefresh so you have the ability to update the form changes */}
-                    {/* !!!!!! change this so only unapproved activities can be edited */}
-                    <button id={tA.id} onClick={(e) => {
-                        e.preventDefault()
-                        setButtonPopup(e.target.id)}}>Edit Activity</button>
-                        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-                            <EditActivity activityId={buttonPopup} setButtonPopUp={setButtonPopup} tripRefresh={tripRefresh} setTripRefresh={setTripRefresh} />
-                        </Popup>
+                    {/* add a ternary so that only unapproved activities can be edited */}
+                    {
+                        tA.is_approved ? "" : <div><button id={tA.id} onClick={(e) => {
+                            e.preventDefault()
+                            setButtonPopup(e.target.id)}}>Edit Activity</button>
+                            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                                <EditActivity activityId={buttonPopup} setButtonPopUp={setButtonPopup} tripRefresh={tripRefresh} setTripRefresh={setTripRefresh} />
+                            </Popup></div>
+                    }
                         <button id="btn" onClick={(evt) => {removeActivity(evt, tA.id)}}> Delete Activity </button>
                         </section>}) : ""
                 }
@@ -194,6 +193,19 @@ export const EditTrip = () => {
                 </div>
             </fieldset>
             {/* add a rating feature if the trip has been completed */}
+            <fieldset>
+                <div className="form-group">
+                <label htmlFor="rating">Rate Your Trip: </label>
+                    <ReactStars 
+                        count={5}
+                        value={trip.rating}
+                        edit={true}
+                        size={24}
+                        activeColor="#ffd700"
+                        onChange={ratingChanged}
+                        />
+                </div>
+            </fieldset>
             {/* <fieldset>
                 <div className="form-group">
                 <UploadImages obj={dog} update={updateDog} />
@@ -203,5 +215,6 @@ export const EditTrip = () => {
                 <button id="btn" outline className="btn btn-addTrip" onClick={editTrip} >Submit</button>
             </div>
         </form>
+        </>
     )
 }

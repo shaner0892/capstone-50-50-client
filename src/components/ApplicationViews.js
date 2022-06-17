@@ -2,6 +2,7 @@ import React from "react"
 import { Route } from "react-router-dom"
 import { EditActivity } from "../activities/EditActivity"
 import { AddCategory } from "../categories/AddCategory"
+import { AddPictures } from "../pictures/AddPictures"
 import { EditState } from "../states/EditState"
 import { StateDetails } from "../states/StateDetails"
 import { AddTrip } from "../trips/AddTrip"
@@ -53,6 +54,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/edit-activity/:activityId(\d+)">
                 <EditActivity />
+            </Route>
+            <Route path="/add-pictures/:tripId(\d+)">
+                <AddPictures />
             </Route>
         </main>
     </>
