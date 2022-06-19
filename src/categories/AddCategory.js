@@ -55,7 +55,7 @@ export const AddCategory = () => {
                     </div>
             </fieldset>
             <div>
-                <button id="btn" outline className="btn btn-addCategory" onClick={addNewCategory} >Add</button>
+                <button id="btn" outline className="btn btn-addCategory" onClick={addNewCategory} >Add Category</button>
             </div>
         </form>
         <label>Category List</label> 

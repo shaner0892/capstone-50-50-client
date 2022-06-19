@@ -44,6 +44,12 @@ export const ApplicationViews = () => {
             <Route path="/my-profile/edit">
                 <EditMyProfile />
             </Route>
+            <Route path="/edit-activity/:activityId(\d+)">
+                <EditActivity />
+            </Route>
+            <Route path="/add-pictures/:tripId(\d+)">
+                <AddPictures />
+            </Route>
             
             {/* admin only */}
             <Route path="/edit-state/:stateId(\d+)">
@@ -51,12 +57,6 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/add-category">
                 <AddCategory />
-            </Route>
-            <Route path="/edit-activity/:activityId(\d+)">
-                <EditActivity />
-            </Route>
-            <Route path="/add-pictures/:tripId(\d+)">
-                <AddPictures />
             </Route>
         </main>
     </>

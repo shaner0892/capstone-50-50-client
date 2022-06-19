@@ -5,13 +5,14 @@ import ReactStars from "react-rating-stars-component";
 import SimpleImageSlider from "react-simple-image-slider";
 import { deleteTrip, getSingleTrip } from "./TripManager";
 import { getTripPictures } from "../pictures/PictureManager";
+import { getCurrentUser } from "../users/UserManager";
 
 
 export const TripDetails = () => {
     //use the useState hook function to set the initial value of the new object
     const [trip, setTrip] = useState({})
     const [tripPictures, setTripPictures] = useState([])
-
+    const [user, setUser] = useState({})
     const history = useHistory()
     const {tripId} = useParams()
 
@@ -21,6 +22,8 @@ export const TripDetails = () => {
                 .then(setTrip)
             getTripPictures(tripId)
                 .then(setTripPictures)
+            getCurrentUser()
+                .then(setUser)
         },
         []
     )
@@ -35,19 +38,17 @@ export const TripDetails = () => {
     
     return (
         <>
+        <section className="singleTrip" key={`trip--${trip.id}`}> 
         <h2>Trip #{trip.id}</h2>
-        <section className="trip" key={`trip--${trip.id}`}> 
-            {/* {
-                tripPictures ? tripPictures.map((tp) => {
-                    return <img src={tp.url}/>}) : ""
-            } */}
-            { tripPictures.length > 0 ? <div>
+        {/* display trip images with slider */}
+            { tripPictures.length > 0 ? <div className="tripPics">
                 <SimpleImageSlider
-                    width={896}
-                    height={504}
+                    width={700}
+                    height={700}
                     images={tripPictures}
                     showBullets={true}
                     showNavs={true}
+                    autoPlay={true}
                 />
                 </div> : ""
             }
@@ -57,10 +58,9 @@ export const TripDetails = () => {
             <div><b>What:</b> {trip.about} </div>
             <div><b>Activities:</b>
             {
-                trip.activities?.map(a => <li>{a.title}</li>)
+                trip.activities?.length > 0 ? trip.activities?.map(a => <li>{a.title}</li>) : " No activities added"
             }
             </div>
-            {/* display trip images */}
             {/* display trip rating with stars component */}
             <div><b>Rating:</b>
                 <ReactStars 
@@ -71,8 +71,12 @@ export const TripDetails = () => {
                     activeColor="#ffd700"
                 />
             </div>
-            <button onClick={() => history.push(`/edit-trip/${trip.id}`)}>Edit Trip</button>
-            <button id="btn" onClick={() => {removeTrip(trip.id)}}> Delete Trip </button>
+            {
+                trip.fifty_user?.id === user.id ? <div>
+                <button onClick={() => history.push(`/edit-trip/${trip.id}`)}>Edit Trip</button>
+                <button id="btn" onClick={() => {removeTrip(trip.id)}}> Delete Trip </button></div >
+                : ""
+            }
         </section>
         </>
     )

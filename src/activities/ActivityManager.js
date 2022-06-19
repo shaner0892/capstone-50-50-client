@@ -1,7 +1,11 @@
 const API = 'http://localhost:8000'
 
-export const getActivities = () => {
-    return fetch(`${API}/activities`, {
+export const getActivities = (category) => {
+    let url = "http://localhost:8000/activities?"
+    if (category) {
+        url += `category=${category}`
+    }
+    return fetch(url, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         }

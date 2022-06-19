@@ -23,3 +23,21 @@
   top: 16px;
   right: 16px;
 } 
+
+.leftTo {
+  color:rgb(46, 106, 70)
+}
+
+.beenTo {
+  color: rgb(34, 81, 157)
+}
+
+.homepageHeader {
+  text-align: center;
+}
+
+.us-state-map {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}

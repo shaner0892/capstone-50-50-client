@@ -91,14 +91,6 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="specific_location">Specific Location: </label>
-                    <input name="specific_location" className="form-control" value={activity.specific_location}
-                        onChange={updateActivity} 
-                        />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
                     <label> Category: </label>
                     <select name="category" className="form-control" value={activity.category}
                         onChange={updateActivity}

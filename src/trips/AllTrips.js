@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ReactStars from "react-rating-stars-component";
 import { getTrips } from "./TripManager";
+import "./Trip.css"
 
 
 export const AllTrips = () => {
@@ -19,21 +20,21 @@ export const AllTrips = () => {
     
     return (
         <>
-        <h2>All Trips</h2>
+        <h2 className="pageHeader">All Trips</h2>
         <section className="tripList">
         {
             trips.map((trip) => {
-                return <section className="trip" key={`trip--${trip.id}`}> 
-                <h3 onClick={() => history.push(`/trip-details/${trip.id}`)}><b>Trip #{trip.id}</b></h3> 
+                return <section className="trip" key={`trip--${trip.id}`} onClick={() => history.push(`/trip-details/${trip.id}`)}> 
+                <h3><b>Trip #{trip.id}</b></h3> 
                 <div><b>Who:</b> {trip.fifty_user?.user?.username}</div>
-                <div><b>Where:</b> {trip.city}, {trip.state?.name} </div>
-                <div><b>What:</b> {trip.about} </div>
-                <div><b>When:</b> {trip.start_date} - {trip.end_date}</div>
-                <div><b>Activities:</b>
+                <div><b>Where:</b> {trip.city}, {trip.state?.postal_abbreviation} </div>
+                {/* <div><b>What:</b> {trip.about} </div> */}
+                <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
+                {/* <div><b>Activities:</b>
                 {
                     trip.activities?.map(a => <li>{a.title}</li>)
                 }
-                </div>
+                </div> */}
                 <div><b>Rating:</b>
                     <ReactStars 
                         count={5}

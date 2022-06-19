@@ -78,7 +78,7 @@ export const EditTrip = () => {
         }
 
         putTrip(tripId, editedTrip)
-            .then(() => history.push(`/my-trips`))
+            .then((res) => history.push(`/add-pictures/${tripId}`))
     }
 
     //define a function to delete a activity
@@ -212,7 +212,7 @@ export const EditTrip = () => {
                 </div>
             </fieldset> */}
             <div>
-                <button id="btn" outline className="btn btn-addTrip" onClick={editTrip} >Submit</button>
+                <button id="btn" outline className="btn btn-addTrip" onClick={editTrip} >Next</button>
             </div>
         </form>
         </>

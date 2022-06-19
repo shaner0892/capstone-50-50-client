@@ -1,0 +1,95 @@
+.tripList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 50px;
+    text-align: center;
+}
+
+.trip {
+    margin: 10px;
+    padding: 10px;
+    width: 20%;
+    height: 200px;
+    border: black 2px solid;
+    transition: transform .2s; 
+    cursor: pointer;
+}
+
+.pageHeader {
+    text-align: center;
+}
+
+.newTripBtn {
+    float: right;
+    margin-right: 200px;
+}
+
+.singleTrip {
+    text-align: center;
+}
+
+.tripPics {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.undefined.react-stars {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.zoom {
+    padding: 35px;
+    transition: transform .2s; 
+    cursor: pointer;
+}
+
+.trip:hover {
+    transform: scale(1.1); 
+}
+
+fieldset {
+    min-width: 0;
+    padding: 1rem 0;
+    margin: 0;
+    border: 0;
+}
+
+.form-control {
+    display: block;
+    width: 94%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-group {
+    margin: 10px;
+}
+
+#form-bio, #bio {
+    height:100px;
+    /* display:-webkit-box; */
+} 
+
+.tripForm {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+#check {
+    width: 35px;
+}
