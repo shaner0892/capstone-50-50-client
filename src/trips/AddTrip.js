@@ -42,6 +42,12 @@ export const AddTrip = () => {
         activity: [],
         rating: 0
     });
+
+    const filterActivities = (evt, value) => {
+        evt.preventDefault()
+        getActivities(value)
+            .then(setActivities)
+    }
     
     //this updates the state as the user makes changes
     //if they add an activity the id is pushed into the trip.activity array
@@ -92,7 +98,7 @@ export const AddTrip = () => {
             <h2 className="tripForm__title">Add a Trip</h2>
             <fieldset>
                 <div className="form-group">
-                    <label> Destination: </label>
+                    <h4> Destination: </h4>
                     <input name="city" className="form-control"
                         placeholder="City Name"
                         onChange={updateTripState}
@@ -109,14 +115,14 @@ export const AddTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="start_date">Start Date: </label>
+                    <h4 htmlFor="start_date">Start Date: </h4>
                     <input 
                         type="date" name="start_date" 
                         className="form-control"
                         onChange={updateTripState} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="end_date">End Date: </label>
+                    <h4 htmlFor="end_date">End Date: </h4>
                     <input required
                         type="date" name="end_date"
                         className="form-control"
@@ -125,7 +131,7 @@ export const AddTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="about">About: </label>
+                    <h4 htmlFor="about">About: </h4>
                     <textarea id="form-about" cols="40" rows="5"
                         type="text" name="about" 
                         className="form-control"
@@ -136,14 +142,14 @@ export const AddTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                <label> Add Your Activities: </label><br></br>
+                <h4> Add Your Activities: </h4><br></br>
                 {
                     tripActivities ? tripActivities.map((tA) => {
                         return <li>{tA.title}</li> }) : ""
                 }
                     <label> Choose from Existing Activities: </label><br></br>
-                    <select name="category" className="form-control">
-                        <option value="0">Filter by Category</option>
+                    <select name="category" className="form-control" onChange={filterActivities}>
+                        <option value="0" >Filter by Category</option>
                             {categories.map((category) => {
                                 return <option value={category.id}>{category.name}</option>
                             })}
@@ -155,7 +161,7 @@ export const AddTrip = () => {
                                 return <option value={activity.id}>{activity.title}</option>
                             })}
                     </select> <br></br>
-                    <button id="btn" outline className="btn btn-addActivity" onClick={pushActivity} >Add</button><br></br>
+                    <button id="btn" outline className="btn btn-addActivity" onClick={pushActivity} >Add Activity</button><br></br>
                     <label> Or Create a New Activity: </label>
                     <AddActivity tripActivities={tripActivities} setTripActivities={setTripActivities} />
                     {/* <button id="btn" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</button> */}
@@ -164,7 +170,7 @@ export const AddTrip = () => {
             {/* do I need a completed section? Should I just determine this by the end date and nix it? The idea was a trip may have been cancelled */}
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="completed">Have you already completed this trip? </label>
+                    <h4 htmlFor="completed">Have you already completed this trip? </h4>
                     <input neam="completed" type="checkbox" className="box" onChange={
                             (evt) => {
                                 const copy = {...trip}
@@ -177,7 +183,7 @@ export const AddTrip = () => {
             {/* add a rating feature if the trip has been completed */}
             <fieldset>
                 <div className="form-group">
-                <label htmlFor="rating">Rate Your Trip: </label>
+                <h4 htmlFor="rating">Rate Your Trip: </h4>
                     <ReactStars 
                         count={5}
                         onChange={ratingChanged}
@@ -192,7 +198,7 @@ export const AddTrip = () => {
                 </div>
             </fieldset> */}
             <div>
-                <button id="btn" outline className="btn btn-addTrip" onClick={addNewTrip} >Submit</button>
+                <button id="btn" outline className="btn btn-addTrip" onClick={addNewTrip} >Next</button>
             </div>
         </form>
     )

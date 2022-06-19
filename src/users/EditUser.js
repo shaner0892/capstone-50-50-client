@@ -25,7 +25,7 @@ export const EditMyProfile = (props) => {
                     location : user.location,
                     bio : user.bio,
                     is_active : true,
-                    image_url : user.image_url,
+                    url : user.url,
                     id : user.id
                 }
             setUser(currentUser)})
@@ -92,8 +92,8 @@ export const EditMyProfile = (props) => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="image_url"> Profile Picture: </label><br></br>
-                    <img className="userProfilePic" src={user.image_url}/><br></br>
-                    <UploadImages obj={user} update={setUser} />
+                    <img className="userProfilePic" src={user.url}/><br></br>
+                    <UploadImages isTripPicture={false} obj={user} update={setUser} />
                 </fieldset>
                 <fieldset>
                     <button id="btn" outline type="submit"> Save </button>

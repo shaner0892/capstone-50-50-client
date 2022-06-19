@@ -1,17 +1,28 @@
 import React from "react"
+import { useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
-import { Nav, NavItem, NavLink } from 'reactstrap';
+// import { Nav, NavItem, NavLink } from 'reactstrap';
+import { getCurrentUser } from "../../users/UserManager";
 import "./NavBar.css"
 
 export const NavBar = () => {
   const history = useHistory()
+  const [user, setUser] = useState({})
+
+  useEffect(
+    () => {
+        getCurrentUser()
+            .then(setUser)
+    },
+    []
+)
 
   return (
     <nav >
       <div className="header">
-        <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655419574/5050_cjm5jz.jpg" alt="logo" />
-        {/* <h1>50/50</h1>
-        <h3>Your Travel Guide and Tracker</h3> */}
+        <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655504587/5050_1_irzg7x.jpg" alt="logo" />
+        {/* <p className="headerText">50/50</p> */}
+        <p className="headerSubText">Keep Your Memories Close and Your Adventures Far</p>
       </div>
       {/* <div className="navBar">
         <Nav pills>
@@ -37,6 +48,9 @@ export const NavBar = () => {
         <Link to="/all-trips" class="navBar_item">All Trips</Link>
         <Link to="/my-profile" class="navBar_item">My Profile</Link>
         <Link to="/my-trips" class="navBar_item">My Trips</Link>
+        {
+          user.user?.is_staff ? <Link to="/add-category" class="navBar_item">Category Manager</Link> : ""
+        }
         <Link to="/" onClick={() => {localStorage.removeItem("auth_token")}}>Logout</Link>
       </div>
       

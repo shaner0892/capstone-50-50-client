@@ -106,15 +106,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="specific_location">Specific Location: </label>
-                    <input name="specific_location" value={activity.specific_location} className="form-control"
-                        placeholder="Avondale Brewery"
-                        onChange={updateActivity} 
-                        />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
                     <label> Category: </label>
                     <select name="category" value={activity.category} className="form-control"
                         onChange={updateActivity}
@@ -147,7 +138,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                 <button id="btn" outline className="btn btn-addActivity" onClick={(evt) => {
                     addNewActivity(evt) 
                     clearFilters(evt)
-                }} >Add</button>
+                }} >Add Activity</button>
             </div>
         </form>
         </>

@@ -9,8 +9,7 @@ export default function UploadImages({isTripPicture, obj, update}) {
     const checkUploadResult = (resultEvent) => {
         if (resultEvent.event === "success") {
             const copy = {...obj}
-            // will need to push this rather than set equal to
-            copy.image_url = resultEvent.info.secure_url
+            copy.url = resultEvent.info.secure_url
             console.log(copy)
             update(copy)
             setUploadedImages(`${resultEvent.info.original_filename}.${resultEvent.info.format}`)
@@ -30,11 +29,11 @@ export default function UploadImages({isTripPicture, obj, update}) {
 
     return (
         <>
-            <button id="uploadBtn" type="file" onClick={showWidget} >Upload an image</button>
+            <button id="uploadBtn" type="file" onClick={showWidget} >Browse</button>
             {/* {
                 uploadedImages.map((img) => {return {img}} )
             } */}
-            <p>{uploadedImages}</p>
+            <p>{uploadedImages ? "Photos added" : ""}</p>
         </>
     )
 }

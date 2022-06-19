@@ -1,15 +1,31 @@
 .header {
-    background-color: #345f73;
+    background-image: url("https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655567967/5050_3_eqc6mp.jpg");
     display: flex;
-    flex-wrap: nowrap;
     color: rgb(255, 255, 255);
-    /* justify-content: space-evenly; */
+    font-family: 'Playfair Display', serif;
+}
+
+.headerText {
+    /* text-align: center;
+    width: 100%;
+    font-size: 50px; */
+}
+
+.headerSubText {
+    font-size: 25px;
+    background-color: black;
+    padding: 10px;
+    padding-top: 8px;
+    height: fit-content;
+    margin: auto;
+    position: relative;
 }
 
 .navBar {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    background-color: black;
 }
 
 .navBar__item {
@@ -20,7 +36,9 @@
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     display: inline-flex;
+    /* margin-left: 30px; */
+    /* border: solid black 4px; */
 }
