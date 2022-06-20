@@ -44,47 +44,51 @@ export const Register = () => {
 
 return (
   <main>
-    <form onSubmit={handleRegister}>
+    <div className="header">
+        <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655504587/5050_1_irzg7x.jpg" alt="logo" />
+        <p className="headerSubText">Keep Your Memories Close and Your Adventures Far</p>
+      </div>
+    <form className="form" onSubmit={handleRegister}>
       <h3>Register an account</h3>
       <fieldset>
-        <label htmlFor="inputUsername">Username </label>
+        <label htmlFor="inputUsername">Username: </label>
         <input ref={username} type="text" name="username" placeholder="Username" required />
       </fieldset>
       <fieldset>
-        <label htmlFor="inputFirstName"> First Name </label>
+        <label htmlFor="inputFirstName"> First Name: </label>
         <input ref={firstName} type="firstName" name="firstName" placeholder="David" required />
       </fieldset>
       <fieldset>
-        <label htmlFor="inputLastName"> Last Name </label>
+        <label htmlFor="inputLastName"> Last Name: </label>
         <input ref={lastName} type="lastName" name="lastName" placeholder="Rose" required />
       </fieldset>
       <fieldset>
-        <label htmlFor="inputEmail"> Email </label>
+        <label htmlFor="inputEmail"> Email: </label>
         <input ref={email} type="email" name="email" placeholder="david@gmail.com" required />
       </fieldset>
       <fieldset>
-        <label htmlFor="inputLocation"> Location </label>
+        <label htmlFor="inputLocation"> Location: </label>
         <input ref={location} type="location" name="location" placeholder="Schitt's Creek, MO" />
       </fieldset>
       <fieldset>
-        <label htmlFor="inputBio"> Bio </label>
-        <input ref={bio} type="bio" name="bio" placeholder="Tell us about yourself" />
+        <label htmlFor="inputBio"> Bio: </label>
+        <textarea ref={bio} type="bio" name="bio" placeholder="Tell us about yourself" cols="40" rows="5" ></textarea>
       </fieldset>
       <fieldset>
-        <label htmlFor="inputPassword"> Password </label>
+        <label htmlFor="inputPassword"> Password: </label>
         <input ref={password} type="password" name="password" placeholder="Password" required />
       </fieldset>
       <fieldset>
-        <label htmlFor="inputPassword"> Re-enter Password </label>
+        <label htmlFor="inputPassword"> Re-enter Password: </label>
       <input ref={verifyPassword} type="password" name="password" placeholder="Verify Password" required />
       </fieldset>
       <fieldset>
         <button type="submit">Register</button>
       </fieldset>
+      <section>
+        Already registered? <Link to="/login">Login</Link>
+      </section>
     </form>
-    <section>
-      Already registered? <Link to="/login">Login</Link>
-    </section>
   </main>
 )
 }

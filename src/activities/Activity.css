@@ -1,0 +1,65 @@
+.activityList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 50px;
+    text-align: center;
+}
+
+.activity {
+    margin: 10px;
+    padding: 10px;
+    width: 20%;
+    height: 200px;
+    border: black 2px solid;
+    transition: transform .2s; 
+    cursor: pointer;
+}
+
+.pageHeader {
+    text-align: center;
+}
+
+.newActivityBtn {
+    float: right;
+    margin-right: 200px;
+}
+
+.singleActivity {
+    text-align: center;
+}
+
+.activityPics {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.undefined.react-stars {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.zoom {
+    padding: 35px;
+    transition: transform .2s; 
+    cursor: pointer;
+}
+
+.activity:hover {
+    transform: scale(1.1); 
+}
+
+.reviews {
+    display: flex;
+}
+
+.review {
+    margin: 10px;
+    padding: 10px;
+    width: 20%;
+    height: fit-content;
+    border: black 2px solid;
+    transition: transform .2s; 
+}

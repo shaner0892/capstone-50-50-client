@@ -60,7 +60,7 @@ export const AddCategory = () => {
         </form>
         <label>Category List</label> 
         {
-            categories.map((c) => <ul>{c.name}</ul>)
+            categories.map((c) => <li>{c.name}</li>)
 
         }
         </>

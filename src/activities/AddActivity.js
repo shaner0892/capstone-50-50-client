@@ -27,7 +27,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         title: "",
         state: 0,
         city: "",
-        specific_location: "",
         category: 0,
         is_approved: false
     });
@@ -48,7 +47,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             title: activity.title,
             state: activity.state,
             city: activity.city,
-            specific_location: activity.specific_location,
             category: activity.category,
             is_approved: activity.is_approved
         }
@@ -68,7 +66,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             title: "",
             state: 0,
             city: "",
-            specific_location: "",
             category: 0,
             is_approved: false
         })
@@ -123,7 +120,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                     <fieldset>
                         <div className="form-group">
                             <label htmlFor="is_approved">Is this activity approved? </label>
-                            <input neam="is_approved" type="checkbox" className="box" onChange={
+                            <input name="is_approved" type="checkbox" className="box" onChange={
                                     (evt) => {
                                         const copy = {...activity}
                                         copy.is_approved = evt.target.checked

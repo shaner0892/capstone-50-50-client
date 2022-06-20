@@ -1,8 +1,12 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { ActivityDetails } from "../activities/ActivityDetails"
+import { ActivityList } from "../activities/ActivityList"
+import { AddActivity } from "../activities/AddActivity"
 import { EditActivity } from "../activities/EditActivity"
 import { AddCategory } from "../categories/AddCategory"
 import { AddPictures } from "../pictures/AddPictures"
+import { ReviewActivity } from "../reviews/ReviewForm"
 import { EditState } from "../states/EditState"
 import { StateDetails } from "../states/StateDetails"
 import { AddTrip } from "../trips/AddTrip"
@@ -50,6 +54,15 @@ export const ApplicationViews = () => {
             <Route path="/add-pictures/:tripId(\d+)">
                 <AddPictures />
             </Route>
+            <Route path="/all-activities">
+                <ActivityList />
+            </Route>
+            <Route path="/activity-details/:activityId(\d+)">
+                <ActivityDetails />
+            </Route>
+            <Route path="/review-activity/:activityId(\d+)">
+                <ReviewActivity />
+            </Route>
             
             {/* admin only */}
             <Route path="/edit-state/:stateId(\d+)">
@@ -57,6 +70,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/add-category">
                 <AddCategory />
+            </Route>
+            <Route path="/add-activity">
+                <AddActivity />
             </Route>
         </main>
     </>

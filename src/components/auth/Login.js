@@ -35,23 +35,27 @@ export const Login = () => {
         <div>Username or password was not valid.</div>
         <button onClick={e => invalidDialog.current.close()}>Close</button>
       </dialog>
+      <div className="header">
+        <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655504587/5050_1_irzg7x.jpg" alt="logo" />
+        <p className="headerSubText">Keep Your Memories Close and Your Adventures Far</p>
+      </div>
       <section>
-        <form onSubmit={handleLogin}>
+        <form className="loginForm" onSubmit={handleLogin}>
           <fieldset>
-            <label htmlFor="inputUsername"> Username</label>
+            <label htmlFor="inputUsername"> Username: </label>
             <input ref={username} type="username" id="username" placeholder="Username" required autoFocus />
           </fieldset>
           <fieldset>
-            <label htmlFor="inputPassword"> Password </label>
+            <label htmlFor="inputPassword"> Password: </label>
             <input ref={password} type="password" id="password" placeholder="Password" required />
           </fieldset>
           <fieldset>
             <button type="submit">Sign In</button>
           </fieldset>
+          <section>
+            <Link to="/register">Not a member yet?</Link>
+          </section>
         </form>
-      </section>
-      <section>
-        <Link to="/register">Not a member yet?</Link>
       </section>
     </main>
   )
