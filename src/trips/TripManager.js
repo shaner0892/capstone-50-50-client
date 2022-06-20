@@ -1,7 +1,11 @@
 const API = 'http://localhost:8000'
 
-export const getTrips = () => {
-    return fetch(`${API}/trips`, {
+export const getTrips = (state) => {
+    let url = `${API}/trips?`
+    if (state) {
+        url += `state=${state}`
+    }
+    return fetch(url, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         }

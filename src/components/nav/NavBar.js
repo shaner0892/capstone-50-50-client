@@ -20,6 +20,7 @@ export const NavBar = () => {
   return (
     <nav >
       <div className="header">
+        {/* <img className="fullHeader" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655673469/5050_Keep_Your_Memories_Close_and_Your_Adventures_Far_2_v3v0yg.jpg"/> */}
         <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655504587/5050_1_irzg7x.jpg" alt="logo" />
         {/* <p className="headerText">50/50</p> */}
         <p className="headerSubText">Keep Your Memories Close and Your Adventures Far</p>
@@ -46,6 +47,7 @@ export const NavBar = () => {
       <div className="navBar">
         <Link to="/" class="navBar_item">Home</Link>
         <Link to="/all-trips" class="navBar_item">All Trips</Link>
+        <Link to="/all-activities" class="navBar_item">All Activities</Link>
         <Link to="/my-profile" class="navBar_item">My Profile</Link>
         <Link to="/my-trips" class="navBar_item">My Trips</Link>
         {

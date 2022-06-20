@@ -16,8 +16,10 @@ export const AddTrip = () => {
     const [activities, setActivities] = useState([])
     const history = useHistory()
     const [tripActivities, setTripActivities] = useState([])
-    const [tripPictures, setTripPictures] = useState([])
+    // const [tripPictures, setTripPictures] = useState([])
     const [rating, setRating] = useState({})
+    const [category, setCategory] = useState("")
+    const [state, setState] = useState("")
 
     useEffect(
         () => {
@@ -25,10 +27,10 @@ export const AddTrip = () => {
                 .then(setStates)
             getCategories()
                 .then(setCategories)
-            getActivities()
+            getActivities(state, category)
                 .then(setActivities)
         },
-        []
+        [state, category]
     )
 
     //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
@@ -42,12 +44,6 @@ export const AddTrip = () => {
         activity: [],
         rating: 0
     });
-
-    const filterActivities = (evt, value) => {
-        evt.preventDefault()
-        getActivities(value)
-            .then(setActivities)
-    }
     
     //this updates the state as the user makes changes
     //if they add an activity the id is pushed into the trip.activity array
@@ -104,8 +100,10 @@ export const AddTrip = () => {
                         onChange={updateTripState}
                         /> 
                     <select name="state" className="form-control" 
-                    // need to add onChange={e => setState(e.target.value)}
-                        onChange={updateTripState}>
+                        // each time the user changes the state selection, filter the activities
+                        onChange={(evt) => {
+                            updateTripState(evt)
+                            setState(parseInt(evt.target.value))}}>
                         <option value="0">State</option>
                             {states.map((state) => {
                                 return <option value={state.id}>{state.name}</option>
@@ -148,7 +146,8 @@ export const AddTrip = () => {
                         return <li>{tA.title}</li> }) : ""
                 }
                     <label> Choose from Existing Activities: </label><br></br>
-                    <select name="category" className="form-control" onChange={filterActivities}>
+                    {/* each time the user changes the category, filter the activities */}
+                    <select className="form-control" onChange={e => setCategory(parseInt(e.target.value))}>
                         <option value="0" >Filter by Category</option>
                             {categories.map((category) => {
                                 return <option value={category.id}>{category.name}</option>
