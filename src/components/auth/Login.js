@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
+import { Button } from "reactstrap";
 import "./Auth.css"
 import { loginUser } from "./AuthManager"
 
@@ -33,7 +34,7 @@ export const Login = () => {
     <main >
       <dialog ref={invalidDialog}>
         <div>Username or password was not valid.</div>
-        <button onClick={e => invalidDialog.current.close()}>Close</button>
+        <Button color="success" outline onClick={e => invalidDialog.current.close()}>Close</Button>
       </dialog>
       <div className="header">
         <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655504587/5050_1_irzg7x.jpg" alt="logo" />
@@ -50,7 +51,7 @@ export const Login = () => {
             <input ref={password} type="password" id="password" placeholder="Password" required />
           </fieldset>
           <fieldset>
-            <button type="submit">Sign In</button>
+            <Button color="success" outline type="submit">Sign In</Button>
           </fieldset>
           <section>
             <Link to="/register">Not a member yet?</Link>

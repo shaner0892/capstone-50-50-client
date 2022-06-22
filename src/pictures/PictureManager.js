@@ -20,6 +20,3 @@ export const postTripPicture = (newPic) => {
             body: JSON.stringify(newPic)
     })
 }
-
-// add post for profile pics
-

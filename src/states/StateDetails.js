@@ -7,9 +7,9 @@ import { useHistory } from "react-router-dom";
 
 // this module is responsible for displaying the selected state's profile
 
-export const StateDetails = () => {
+export const StateDetails = ({stateId}) => {
     const [state, setState] = useState({})
-    const { stateId } = useParams()
+    // const { stateId } = useParams()
     const [user, setUser] = useState({})
     const history = useHistory()
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import ReactStars from "react-rating-stars-component";
-import { render } from "react-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Button } from "reactstrap";
 import { getCategories, postTrip } from "./TripManager";
 import { getStates } from "../states/StateManager";
 import { getActivities } from "../activities/ActivityManager";
@@ -40,7 +40,6 @@ export const AddTrip = () => {
         about: "",
         start_date: "",
         end_date: "",
-        completed: false,
         activity: [],
         rating: 0
     });
@@ -75,7 +74,6 @@ export const AddTrip = () => {
             about: trip.about,
             start_date: trip.start_date,
             end_date: trip.end_date,
-            completed: trip.completed,
             // by mapping through you change it to an array of IDs
             activity: tripActivities.map(tA => tA.id),
             // need to capture rating
@@ -94,7 +92,7 @@ export const AddTrip = () => {
             <h2 className="tripForm__title">Add a Trip</h2>
             <fieldset>
                 <div className="form-group">
-                    <h4> Destination: </h4>
+                    <h5> Destination: </h5>
                     <input name="city" className="form-control"
                         placeholder="City Name"
                         onChange={updateTripState}
@@ -113,14 +111,14 @@ export const AddTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <h4 htmlFor="start_date">Start Date: </h4>
+                    <h5 htmlFor="start_date">Start Date: </h5>
                     <input 
                         type="date" name="start_date" 
                         className="form-control"
                         onChange={updateTripState} />
                 </div>
                 <div className="form-group">
-                    <h4 htmlFor="end_date">End Date: </h4>
+                    <h5 htmlFor="end_date">End Date: </h5>
                     <input required
                         type="date" name="end_date"
                         className="form-control"
@@ -129,7 +127,7 @@ export const AddTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <h4 htmlFor="about">About: </h4>
+                    <h5 htmlFor="about">About: </h5>
                     <textarea id="form-about" cols="40" rows="5"
                         type="text" name="about" 
                         className="form-control"
@@ -140,12 +138,15 @@ export const AddTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                <h4> Add Your Activities: </h4><br></br>
-                {
+                <h5> Add Your Activities: </h5><br></br>
+                <div className="tAList">
+                    {
                     tripActivities ? tripActivities.map((tA) => {
                         return <li>{tA.title}</li> }) : ""
-                }
-                    <label> Choose from Existing Activities: </label><br></br>
+                    }
+                </div>
+                <ol>
+                    <li> Choose from Existing Activities: </li><br></br>
                     {/* each time the user changes the category, filter the activities */}
                     <select className="form-control" onChange={e => setCategory(parseInt(e.target.value))}>
                         <option value="0" >Filter by Category</option>
@@ -160,35 +161,25 @@ export const AddTrip = () => {
                                 return <option value={activity.id}>{activity.title}</option>
                             })}
                     </select> <br></br>
-                    <button id="btn" outline className="btn btn-addActivity" onClick={pushActivity} >Add Activity</button><br></br>
-                    <label> Or Create a New Activity: </label>
+                    <Button className="btn" color="success" outline onClick={pushActivity} >Add Activity</Button><br></br>
+                    <li> Create a New Activity: </li>
                     <AddActivity tripActivities={tripActivities} setTripActivities={setTripActivities} />
-                    {/* <button id="btn" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</button> */}
-                </div>
-            </fieldset>
-            {/* do I need a completed section? Should I just determine this by the end date and nix it? The idea was a trip may have been cancelled */}
-            <fieldset>
-                <div className="form-group">
-                    <h4 htmlFor="completed">Have you already completed this trip? </h4>
-                    <input neam="completed" type="checkbox" className="box" onChange={
-                            (evt) => {
-                                const copy = {...trip}
-                                copy.completed = evt.target.checked
-                                setTrip(copy)
-                            }
-                        } />
+                    {/* <Button id="btn" color="success" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</Button> */}
+                </ol>
                 </div>
             </fieldset>
             {/* add a rating feature if the trip has been completed */}
             <fieldset>
-                <div className="form-group">
-                <h4 htmlFor="rating">Rate Your Trip: </h4>
-                    <ReactStars 
-                        count={5}
-                        onChange={ratingChanged}
-                        size={24}
-                        activeColor="#ffd700"
+                <div className="form-group" id="ratingSection">
+                <h5 htmlFor="rating" id="ratingLabel">Rate Your Trip: </h5>
+                    <div className="formStars">
+                        <ReactStars
+                            count={5}
+                            onChange={ratingChanged}
+                            size={24}
+                            activeColor="#ffd700"
                         />
+                    </div>
                 </div>
             </fieldset>
             {/* <fieldset>
@@ -197,7 +188,7 @@ export const AddTrip = () => {
                 </div>
             </fieldset> */}
             <div>
-                <button id="btn" outline className="btn btn-addTrip" onClick={addNewTrip} >Next</button>
+                <Button className="btn" color="success" outline onClick={addNewTrip} >Next</Button>
             </div>
         </form>
     )

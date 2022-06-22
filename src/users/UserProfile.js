@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
+import { Button } from "reactstrap";
 import { getCurrentUser } from "./UserManager";
 import "./User.css"
 
@@ -36,7 +37,7 @@ export const MyProfile = () => {
                 <div><b>Email:</b> {user.user?.email}</div>
                 <div><b>Location:</b> {user.location}</div>
                 <div><b>About me:</b> {user.bio}</div>
-                <button id="btn" onClick={() => history.push(`/my-profile/edit`)}> Edit Profile </button>
+                <Button id="btn" color="success" outline onClick={() => history.push(`/my-profile/edit`)}> Edit Profile </Button>
             </section>
         </>
     )

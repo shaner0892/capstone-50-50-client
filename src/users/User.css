@@ -3,6 +3,66 @@
     height: 50%;
 }
 
+.editProfilePic {
+    width: 70%;
+    height: 50%;
+}
+
 .userProfile {
     text-align: center;
+}
+
+h2 {
+    margin: 30px;
+    font-weight: bold;
+}
+
+.form-control {
+    display: block;
+    width: 94%;
+    height: calc(1.5em + .75rem + 2px);
+    margin: 2px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-group {
+    margin: 10px;
+    text-align: left;
+}
+
+.userForm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+fieldset {
+    min-width: 0;
+    padding: .5rem 0;
+    margin: 0;
+    border: 0;
+}
+
+.picInput {
+    width: 30%;
+    padding-right: 0;
+}
+
+.textInput {
+    width:40%;
+}
+
+.form-buttons {
+    margin-left: auto;
+    margin-right: auto;
 }

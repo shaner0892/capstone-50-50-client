@@ -25,28 +25,30 @@ export const AllTrips = () => {
     
     return (
         <>
-        <h2 className="pageHeader">All Trips</h2>
+        <h2 className="pageHeader">Browse All Trips</h2>
+        <section className="filter-section">
+            <select className="filter-control" id="firstDrop" onChange={e => setState(parseInt(e.target.value))}>
+                <option value="0" >Filter by State</option>
+                    {states.map((state) => {
+                        return <option value={state.id}>{state.name}</option>
+                    })}
+            </select> 
+        </section>
         <section className="tripList">
-        <select className="form-control" onChange={e => setState(parseInt(e.target.value))}>
-            <option value="0" >Filter by State</option>
-                {states.map((state) => {
-                    return <option value={state.id}>{state.name}</option>
-                })}
-        </select> 
         {
             trips.map((trip) => {
                 return <section className="trip" key={`trip--${trip.id}`} onClick={() => history.push(`/trip-details/${trip.id}`)}> 
-                <h3><b>Trip #{trip.id}</b></h3> 
-                <div><b>Who:</b> {trip.fifty_user?.user?.username}</div>
-                <div><b>Where:</b> {trip.city}, {trip.state?.postal_abbreviation} </div>
-                {/* <div><b>What:</b> {trip.about} </div> */}
-                <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
+                <h5><b>Trip to {trip.city}, {trip.state?.postal_abbreviation}</b></h5> 
+                {/* <div><b>Where:</b> {trip.city}, {trip.state?.postal_abbreviation} </div> */}
+                <div>{trip.about} </div>
+                {/* <div><b>When:</b> {trip.start_date} to {trip.end_date}</div> */}
+                <div><b>By:</b> {trip.fifty_user?.user?.username}</div>
                 {/* <div><b>Activities:</b>
                 {
                     trip.activities?.map(a => <li>{a.title}</li>)
                 }
                 </div> */}
-                <div><b>Rating:</b>
+                <div>
                     <ReactStars 
                         count={5}
                         edit={false}

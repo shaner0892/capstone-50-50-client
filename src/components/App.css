@@ -15,7 +15,7 @@
   padding: 32px;
   width: 100%;
   max-width: 640px;
-  background-color: rgb(184, 197, 203);
+  background-color: rgb(236, 241, 244);
 }
 
 .popup-inner .close-btn {
@@ -25,11 +25,19 @@
 } 
 
 .leftTo {
-  color:rgb(46, 106, 70)
+  background-color:rgb(46, 106, 70);
+  color: white;
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .beenTo {
-  color: rgb(34, 81, 157)
+  background-color: rgb(34, 81, 157);
+  color: white;
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .homepageHeader {
