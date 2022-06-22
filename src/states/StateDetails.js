@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 import { getSingleState } from "./StateManager";
 import "./State.css"
 import { getCurrentUser } from "../users/UserManager";
-import { useHistory } from "react-router-dom";
 
 // this module is responsible for displaying the selected state's profile
 
 export const StateDetails = ({stateId}) => {
     const [state, setState] = useState({})
-    // const { stateId } = useParams()
     const [user, setUser] = useState({})
     const history = useHistory()
 
@@ -30,20 +29,22 @@ export const StateDetails = ({stateId}) => {
         []
     )
 
+    // need to display all info: capital, established, population, largest city
     return (
-        // need to display all info: capital, established, population, largest city
         <>
         <section className="stateDetails">
             <h2>{state.name}</h2>
             <img className="stateFlag" src={state.flag_url}/>
-            <div> <b>Capital:</b> {state.capital} </div>
-            <div> <b>Established:</b> {state.established} </div>
-            <div> <b>Population:</b> {state.population} </div>
-            <div> <b>Largest City:</b> {state.largest_city} </div>
+            <article className="stateInfo">
+                <div> <b>Capital:</b> {state.capital} </div>
+                <div> <b>Established:</b> {state.established} </div>
+                <div> <b>Population:</b> {state.population} </div>
+                <div> <b>Largest City:</b> {state.largest_city} </div>
+            </article>
             {/* add highest rated activities 
             <div> <b>Highest Rated Activities:</b>{state.best_activities}</div> */}
             {
-                user.user?.is_staff ? <button onClick={() => history.push(`/edit-state/${state.id}`)}>Edit State</button>
+                user.user?.is_staff ? <Button color="success" outline onClick={() => history.push(`/edit-state/${state.id}`)}>Edit State</Button>
                 : ""
             }
         </section>

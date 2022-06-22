@@ -92,7 +92,7 @@ export const EditMyProfile = (props) => {
                     </fieldset>
                     <fieldset className="form-group">
                         <label htmlFor="bio"> About Me: </label>
-                        <textarea id="bio" value={user.bio} cols="40" rows="5" onChange={updateUser} type="text" className="form-control" ></textarea>
+                        <textarea id="form-about" value={user.bio} cols="40" rows="5" onChange={updateUser} type="text" className="form-control" ></textarea>
                     </fieldset>
                 </div>
             </form>

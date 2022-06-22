@@ -20,3 +20,12 @@ export const postCategory = (newCategory) => {
     })
     .then((res) => res.json())
 }
+
+export const deleteCategory = (categoryId) => {
+    return fetch(`${API}/categories/${categoryId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`,
+        }
+    })
+}

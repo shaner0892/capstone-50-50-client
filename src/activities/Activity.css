@@ -136,3 +136,7 @@ fieldset {
 .leftBtn {
     float: left;
 }
+
+.radio {
+    margin: 10px;
+}

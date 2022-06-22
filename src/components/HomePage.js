@@ -1,5 +1,4 @@
 import React from "react"
-import { useHistory } from "react-router-dom"
 import USAMap from "react-usa-map"
 import { useEffect, useState } from "react"
 import { getStates } from "../states/StateManager"
@@ -11,8 +10,8 @@ import "./App.css"
 export const Map = () => {
     const [states, setStates] = useState([])
     const [statesVisited, setStatesVisited] = useState([])
-    const history = useHistory()
     const [buttonPopup, setButtonPopup] = useState(false)
+    const [state, setState] = useState({})
 
     useEffect(
         () =>{
@@ -28,48 +27,25 @@ export const Map = () => {
         },
         []
     )
+
+    // when a user clicks on a state, it sets the popup to true and sets the state selected
     const statePopup = (stateId) => {
+        setState(stateId)
         setButtonPopup(true);
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-            <StateDetails stateId={stateId}/>
-            {/* <div>test</div> */}
-        </Popup>
+        
     }
 
     const stateColors = () => {
         let statesObject = {}
         // the react map template is expecting two arguments: what color to fill and what to do on click
         states.forEach(state => {
-            if(statesVisited.length === 0){
-                statesObject[state.postal_abbreviation] = {fill: "rgb(46, 106, 70)", clickHandler: () => statePopup(state.id)
-            }}
-            else {
-                statesObject[state.postal_abbreviation] = {fill: statesVisited.includes(state.id) ? "rgb(34, 81, 157)" : "rgb(46, 106, 70)", clickHandler: () => statePopup(state.id)}
-            }
+            statesObject[state.postal_abbreviation] = {fill: statesVisited.includes(state.id) ? "rgb(34, 81, 157)" : "rgb(46, 106, 70)", clickHandler: () => statePopup(state.id)}
         })
         return statesObject
     }
 
-
-    // const stateColors = () => {
-    //     const pushToState = (stateId) => {
-    //         history.push(`/state/${stateId}`)
-    //     }
-    //     let statesObject = {}
-    //     // the react map template is expecting two arguments: what color to fill and what to do on click
-    //     states.forEach(state => {
-    //         if(statesVisited.length === 0){
-    //             statesObject[state.postal_abbreviation] = {fill: "rgb(46, 106, 70)", clickHandler: () => pushToState(state.id)}
-    //         }else {
-    //             statesObject[state.postal_abbreviation] = {fill: statesVisited.includes(state.id) ? "rgb(34, 81, 157)" : "rgb(46, 106, 70)", clickHandler: () => pushToState(state.id)}
-    //         }
-    //     })
-    //     return statesObject
-    // }
-    
     return (
         <>
-        {/* <h2>Track Your Travels</h2> */}
         <section className="homepageHeader">
             <h2>States Visited: {statesVisited.length}/50</h2>
             <p className="beenTo"><b>Where you've been</b></p>
@@ -78,7 +54,9 @@ export const Map = () => {
         <section className="homepageMap">
             <USAMap customize={stateColors()}/>
         </section>
-        
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+            <StateDetails stateId={state}/>
+        </Popup>
         </>
     )
 }

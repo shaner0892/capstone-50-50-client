@@ -1,12 +1,15 @@
 const API = 'http://localhost:8000'
 
-export const getActivities = (state, category) => {
+export const getActivities = (state, category, rating) => {
     let url = `${API}/activities?`
     if (state) {
         url += `state=${state}&`
     }
     if (category) {
         url += `category=${category}&`
+    }
+    if (rating) {
+        url += `rating&`
     }
     return fetch(url, {
         headers:{

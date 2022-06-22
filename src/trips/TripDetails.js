@@ -40,7 +40,7 @@ export const TripDetails = () => {
     return (
         <>
         <section className="singleTrip" key={`trip--${trip.id}`}> 
-        <h2>Trip #{trip.id}</h2>
+        <h2>Trip to {trip.state?.name}</h2>
         {/* display trip images with slider */}
             { tripPictures.length > 0 ? <div className="tripPics">
                 <SimpleImageSlider

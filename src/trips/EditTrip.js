@@ -13,10 +13,10 @@ import { EditActivity } from "../activities/EditActivity";
 
 export const EditTrip = () => {
     //use the useState hook function to set the initial value of the new object
+    const history = useHistory()
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
     const [activities, setActivities] = useState([])
-    const history = useHistory()
     const [tripActivities, setTripActivities] = useState([])    
     const [trip, setTrip] = useState({})
     const {tripId} = useParams()
@@ -35,22 +35,36 @@ export const EditTrip = () => {
                 .then(setCategories)
             getActivities(state, category)
                 .then(setActivities)
-            getSingleTrip(tripId)
-                .then((res) => {
-                    res.state=res.state.id
-                    setTripActivities(res.activities)
-                    setTrip(res)})
         },
         [tripRefresh, state, category]
+    )
+
+    useEffect(
+        () => {
+            getSingleTrip(tripId)
+            .then((res) => {
+                setRating(res.rating)
+                res.state=res.state.id
+                setTripActivities(res.activities)
+                setTrip(res)})
+        },
+        []
     )
 
     //this updates the state as the user makes changes
     //if they add an activity the id is pushed into the trip.activity array
     const updateTripState = (evt) => {
         const editedTrip = Object.assign({}, trip)
-        editedTrip[evt.target.name] = evt.target.value
+        console.log(editedTrip)
+        if (evt.target.name === "state"){
+            editedTrip["state"] = parseInt(evt.target.value)
+        }else {
+            editedTrip[evt.target.name] = evt.target.value
+        }
         setTrip(editedTrip)
+        console.log(editedTrip)
     }
+
     const ratingChanged = (editedRating) => {
         setRating(editedRating)
     }
@@ -78,7 +92,6 @@ export const EditTrip = () => {
             activity: tripActivities.map(tA => tA.id),
             rating: rating
         }
-
         putTrip(tripId, editedTrip)
             .then((res) => history.push(`/add-pictures/${tripId}`))
     }
@@ -107,15 +120,20 @@ export const EditTrip = () => {
                     <h5> Destination: </h5>
                     <input name="city" className="form-control" value={trip.city}
                         onChange={updateTripState}/> 
-                    <select name="state" className="form-control" value={trip.state}
+                    <select name="state" className="form-control"
                     // each time the user changes the state selection, filter the activities
                     // this was just onChange={updateTripState}
                     onChange={(evt) => {
                         updateTripState(evt)
                         setState(parseInt(evt.target.value))}}>
                         <option value="0">State</option>
-                            {states.map((state) => {
-                                return <option value={state.id}>{state.name}</option>
+                        {/* add if else to check which state was selected */}
+                            {states.map((state)=> {
+                                if (trip.state === state.id) {
+                                    return <option value={state.id} selected>{state.name}</option>
+                                } else {
+                                    return <option value={state.id} >{state.name}</option>
+                                }
                             })}
                     </select> 
                 </div>
