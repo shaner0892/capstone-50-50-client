@@ -1,9 +1,10 @@
 import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
+import { Button } from "reactstrap";
 import { registerUser } from "./AuthManager"
 import './Auth.css'
-// TODO: This should get you started on registering a new user. 
-// Add new fields depending on your server side registration
+
+// Add new fields depending on server side registration
 export const Register = () => {
   const firstName = useRef()
   const lastName = useRef()
@@ -48,7 +49,7 @@ return (
         <img className="logo" src="https://res.cloudinary.com/dfxsl6a2c/image/upload/v1655504587/5050_1_irzg7x.jpg" alt="logo" />
         <p className="headerSubText">Keep Your Memories Close and Your Adventures Far</p>
       </div>
-    <form className="form" onSubmit={handleRegister}>
+    <form className="registerForm" onSubmit={handleRegister}>
       <h3>Register an account</h3>
       <fieldset>
         <label htmlFor="inputUsername">Username: </label>
@@ -83,7 +84,7 @@ return (
       <input ref={verifyPassword} type="password" name="password" placeholder="Verify Password" required />
       </fieldset>
       <fieldset>
-        <button type="submit">Register</button>
+        <Button color="success" outline type="submit">Register</Button>
       </fieldset>
       <section>
         Already registered? <Link to="/login">Login</Link>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
+import { Button } from "reactstrap";
 import { getCategories, getSingleTrip, putTrip } from "./TripManager";
 import { getStates } from "../states/StateManager";
 import { deleteActivity, getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
-import { useParams } from "react-router-dom";
 import Popup from "../components/Popup";
 import { EditActivity } from "../activities/EditActivity";
 
@@ -21,7 +22,9 @@ export const EditTrip = () => {
     const {tripId} = useParams()
     const [buttonPopup, setButtonPopup] = useState(false)
     const [tripRefresh, setTripRefresh] = useState(false)
-    const [rating, setRating] = useState({})
+    const [rating, setRating] = useState(0)
+    const [category, setCategory] = useState("")
+    const [state, setState] = useState("")
 
 
     useEffect(
@@ -30,7 +33,7 @@ export const EditTrip = () => {
                 .then(setStates)
             getCategories()
                 .then(setCategories)
-            getActivities()
+            getActivities(state, category)
                 .then(setActivities)
             getSingleTrip(tripId)
                 .then((res) => {
@@ -38,7 +41,7 @@ export const EditTrip = () => {
                     setTripActivities(res.activities)
                     setTrip(res)})
         },
-        [tripRefresh]
+        [tripRefresh, state, category]
     )
 
     //this updates the state as the user makes changes
@@ -71,7 +74,6 @@ export const EditTrip = () => {
             about: trip.about,
             start_date: trip.start_date,
             end_date: trip.end_date,
-            completed: trip.completed,
             // by mapping through you change it to an array of IDs
             activity: tripActivities.map(tA => tA.id),
             rating: rating
@@ -102,12 +104,15 @@ export const EditTrip = () => {
             <h2 className="tripForm__title">Edit Your Trip</h2>
             <fieldset>
                 <div className="form-group">
-                    <label> Destination: </label>
+                    <h5> Destination: </h5>
                     <input name="city" className="form-control" value={trip.city}
                         onChange={updateTripState}/> 
                     <select name="state" className="form-control" value={trip.state}
-                    // need to add onChange={e => setState(e.target.value)}
-                    onChange={updateTripState}>
+                    // each time the user changes the state selection, filter the activities
+                    // this was just onChange={updateTripState}
+                    onChange={(evt) => {
+                        updateTripState(evt)
+                        setState(parseInt(evt.target.value))}}>
                         <option value="0">State</option>
                             {states.map((state) => {
                                 return <option value={state.id}>{state.name}</option>
@@ -117,14 +122,14 @@ export const EditTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="start_date">Start Date: </label>
+                    <h5 htmlFor="start_date">Start Date: </h5>
                     <input value={trip.start_date}
                         type="date" name="start_date"
                         className="form-control"
                         onChange={updateTripState} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="end_date">End Date: </label>
+                    <h5 htmlFor="end_date">End Date: </h5>
                     <input value={trip.end_date}
                         type="date" name="end_date"
                         className="form-control"
@@ -133,8 +138,8 @@ export const EditTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="about">About: </label>
-                    <textarea id="form-about" cols="40" rows="5" value={trip.about}
+                    <h5 htmlFor="about">About: </h5>
+                    <textarea id="form-about" cols="40" rows="10" value={trip.about}
                         type="text" name="about"
                         className="form-control"
                         onChange={updateTripState} >
@@ -143,7 +148,8 @@ export const EditTrip = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                <label> Your Activities: </label><br></br>
+                <h5> Your Activities: </h5><br></br>
+                <ol>
                 {
                     tripActivities ? tripActivities.map((tA) => {
                         return <section><li>{tA.title}</li> 
@@ -152,19 +158,19 @@ export const EditTrip = () => {
                     send in tripRefresh so you have the ability to update the form changes */}
                     {/* add a ternary so that only unapproved activities can be edited */}
                     {
-                        tA.is_approved ? "" : <div><button id={tA.id} onClick={(e) => {
+                        tA.is_approved ? "" : <div><Button className="btn" color="success" outline id={tA.id} onClick={(e) => {
                             e.preventDefault()
-                            setButtonPopup(e.target.id)}}>Edit Activity</button>
+                            setButtonPopup(e.target.id)}}>Edit Activity</Button>
                             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                                 <EditActivity activityId={buttonPopup} setButtonPopUp={setButtonPopup} tripRefresh={tripRefresh} setTripRefresh={setTripRefresh} />
                             </Popup></div>
                     }
-                        <button id="btn" onClick={(evt) => {removeActivity(evt, tA.id)}}> Delete Activity </button>
+                        <Button className="btn" color="success" outline onClick={(evt) => {removeActivity(evt, tA.id)}}> Delete Activity </Button>
                         </section>}) : ""
-                }
+                }</ol>
                 <label> Add to Your Activities: </label><br></br>
-                    <label> Choose from Existing Activities: </label><br></br>
-                    <select name="category" className="form-control">
+                    <li> Choose from Existing Activities: </li><br></br>
+                    <select name="category" className="form-control" onChange={e => setCategory(parseInt(e.target.value))}>
                         <option value="0">Filter by Category</option>
                             {categories.map((category) => {
                                 return <option value={category.id}>{category.name}</option>
@@ -177,42 +183,37 @@ export const EditTrip = () => {
                                 return <option value={activity.id}>{activity.title}</option>
                             })}
                     </select> <br></br>
-                    <button id="btn" outline className="btn btn-addActivity" onClick={pushActivity} >Add</button><br></br>
-                    <label> Or Create a New Activity: </label>
+                    <Button className="btn" color="success" outline onClick={pushActivity} >Add Activity</Button><br></br>
+                    <li> Or Create a New Activity: </li>
                     <AddActivity tripActivities={tripActivities} setTripActivities={setTripActivities} />
-                    {/* <button id="btn" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</button> */}
-                </div>
-            </fieldset>
-            {/* do I need a completed section? Should I just determine this by the end date and nix it? The idea was a trip may have been cancelled */}
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="completed">Have you already completed this trip? </label>
-                    <input type="checkbox"
-                        className="box"
-                        onChange={updateTripState}/>
+                    {/* <Button id="btn" color="success" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</Button> */}
                 </div>
             </fieldset>
             {/* add a rating feature if the trip has been completed */}
             <fieldset>
-                <div className="form-group">
-                <label htmlFor="rating">Rate Your Trip: </label>
-                    <ReactStars 
-                        count={5}
-                        value={trip.rating}
-                        edit={true}
-                        size={24}
-                        activeColor="#ffd700"
-                        onChange={ratingChanged}
-                        />
+                <div className="form-group" id="ratingSection">
+                <h5 htmlFor="rating" id="ratingLabel">Rate Your Trip: </h5>
+                    <div className="formStars">
+                        {/* on intial load it doesn't have a rating, this makes it wait */}
+                        {trip.rating != undefined && 
+                        <ReactStars 
+                            count={5}
+                            value={trip.rating}
+                            edit={true}
+                            size={24}
+                            activeColor="#ffd700"
+                            onChange={ratingChanged}
+                        />}
+                    </div>
                 </div>
             </fieldset>
             {/* <fieldset>
                 <div className="form-group">
-                <UploadImages obj={dog} update={updateDog} />
+                    <UploadImages obj={trip} update={setTrip} />
                 </div>
             </fieldset> */}
             <div>
-                <button id="btn" outline className="btn btn-addTrip" onClick={editTrip} >Next</button>
+                <Button id="btn" color="success" outline onClick={editTrip} >Next</Button>
             </div>
         </form>
         </>

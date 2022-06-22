@@ -22,21 +22,28 @@
     padding: 10px;
     padding-top: 8px;
     height: fit-content;
-    margin: auto;
+    margin-right: 20%;
+    margin-left: 21%;
+    margin-top: 75px;
 }
 
 .navBar {
     display: flex;
     flex-wrap: nowrap;
+    /* background-color: black; */
+    background-color: rgb(204, 204, 204);
+
+    height: 40px;
     justify-content: space-evenly;
-    background-color: black;
 }
 
 .navBar__item {
     flex-basis: 50%;
-    margin: 1000px;
-    color: rgb(0, 0, 0);
+    /* margin: 1000px; */
     list-style-type: none;
+    /* color: white !important; */
+    font-size: 100px;
+
 }
 
 .logo {

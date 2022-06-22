@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom";
-import { getActivities } from "./ActivityManager";
-import "./Activity.css"
+import { Button } from "reactstrap";
 import ReactStars from "react-rating-stars-component";
 import { getCategories } from "../trips/TripManager";
+import { getActivities } from "./ActivityManager";
 import { getStates } from "../states/StateManager";
+import "./Activity.css"
+import { getCurrentUser } from "../users/UserManager";
 
 
 export const ActivityList = () => {
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial values
     const [activities, setActivities] = useState([])
-    const [user, setUser] = useState({})
     const history = useHistory()
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState("")
     const [states, setStates] = useState([])
     const [state, setState] = useState("")
+    const [user, setUser] = useState({})
 
     
     useEffect(
@@ -26,38 +28,44 @@ export const ActivityList = () => {
                 .then(setCategories)
             getStates()
                 .then(setStates)
-            
+            getCurrentUser()
+                .then(setUser)
         },
         [state, category]
     )
     
     return (
         <>
-        <h2>Activity List</h2> 
-        <button className="addActivityBtn" onClick={() => history.push(`/add-activity`)}>Add Activity</button>
-        <select className="form-control" onChange={e => setCategory(parseInt(e.target.value))}>
-            <option value="0" >Filter by Category</option>
-                {categories.map((category) => {
-                    return <option value={category.id}>{category.name}</option>
-                })}
-        </select> 
-        <select className="form-control" onChange={e => setState(parseInt(e.target.value))}>
-            <option value="0" >Filter by State</option>
-                {states.map((state) => {
-                    return <option value={state.id}>{state.name}</option>
-                })}
-        </select> 
+        <h2>Browse All Activities</h2> 
+        {
+            user.user?.is_staff ? <Button color="success" outline className="rightBtn" onClick={() => history.push(`/add-activity`)}>Add Activity</Button> : ""
+        }
+        <section className="filter-section">
+            <select className="filter-control" id="firstDrop" onChange={e => setCategory(parseInt(e.target.value))}>
+                <option value="0" >Filter by Category</option>
+                    {categories.map((category) => {
+                        return <option value={category.id}>{category.name}</option>
+                    })}
+            </select> 
+            <select className="filter-control" onChange={e => setState(parseInt(e.target.value))}>
+                <option value="0" >Filter by State</option>
+                    {states.map((state) => {
+                        return <option value={state.id}>{state.name}</option>
+                    })}
+            </select> 
+        </section>
         <section className="activityList">
         {
             activities.map((a) => {
                 return <section className="activity" key={`activity--${a.id}`} onClick={() => history.push(`/activity-details/${a.id}`)}> 
-                    <h4><b>{a.title}</b> </h4>
+                    <h5><b>{a.title}</b> </h5>
                         <div>Location: {a.city}, {a.state?.postal_abbreviation}</div>
                         <div>Category: {a.category?.name}</div>
                         <div>Average Rating: 
                             <ReactStars
                                 className="stars"
                                 count={5}
+                                isHalf={true}
                                 edit={false}
                                 value={a.average_rating}
                                 size={24}

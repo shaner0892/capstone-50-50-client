@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Button } from "reactstrap";
 import { getCategories } from "../trips/TripManager";
 import { getStates } from "../states/StateManager";
 import { postActivity } from './ActivityManager';
@@ -131,12 +132,10 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                     </fieldset>
                 : ""
             }
-            <div>
-                <button id="btn" outline className="btn btn-addActivity" onClick={(evt) => {
+                <Button className="leftBtn" color="success" outline onClick={(evt) => {
                     addNewActivity(evt) 
                     clearFilters(evt)
-                }} >Add Activity</button>
-            </div>
+                }} >Add Activity</Button>
         </form>
         </>
     )

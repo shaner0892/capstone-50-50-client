@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useHistory } from "react-router-dom";
+import { Button } from "reactstrap";
 import { getSingleState, putState } from "./StateManager";
 
 // this form should only be viewable to staff
@@ -102,7 +103,7 @@ export const EditState = () => {
                     </div>
             </fieldset>
             <div>
-                <button id="btn" outline className="btn btn-editState" onClick={editState} >Save</button>
+                <Button id="btn" color="success" outline className="btn btn-editState" onClick={editState} >Save</Button>
             </div>
         </form>
         </>

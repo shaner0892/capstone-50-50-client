@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { postTripPicture } from "./PictureManager"
-// import { Button } from "reactstrap"
+import { Button } from "reactstrap"
 
 export default function UploadImages({isTripPicture, obj, update}) {
     // change this to an array
@@ -29,7 +29,7 @@ export default function UploadImages({isTripPicture, obj, update}) {
 
     return (
         <>
-            <button id="uploadBtn" type="file" onClick={showWidget} >Browse</button>
+            <Button id="btn" color="success" outline type="file" onClick={showWidget} >Browse</Button>
             {/* {
                 uploadedImages.map((img) => {return {img}} )
             } */}

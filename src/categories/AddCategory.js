@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom";
+import { Button } from "reactstrap";
 import { getCategories, postCategory } from "./CategoryManager";
+import './Category.css'
 
 // this page is only viewable by staff
 
@@ -45,7 +47,7 @@ export const AddCategory = () => {
     //this will be the form you display, you need to capture user input and save to new object
     return (
         <>
-        <form className="categoryForm">
+        <form id="categoryForm">
             <fieldset>
                 <div className="form-group">
                     <label> Add a New Category: </label>
@@ -55,14 +57,16 @@ export const AddCategory = () => {
                     </div>
             </fieldset>
             <div>
-                <button id="btn" outline className="btn btn-addCategory" onClick={addNewCategory} >Add Category</button>
+                <Button id="leftBtn" color="success" outline className="btn btn-addCategory" onClick={addNewCategory} >Add Category</Button>
             </div>
         </form>
-        <label>Category List</label> 
+        <div className="categoryList">
+        <h5>Category List</h5> 
         {
             categories.map((c) => <li>{c.name}</li>)
-
+            
         }
+        </div>
         </>
     )
 }

@@ -3,7 +3,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
-    margin: 50px;
+    justify-content: center;
     text-align: center;
 }
 
@@ -17,13 +17,10 @@
     cursor: pointer;
 }
 
-.pageHeader {
+h2 {
     text-align: center;
-}
-
-.newTripBtn {
-    float: right;
-    margin-right: 200px;
+    margin: 30px;
+    font-weight: bold;
 }
 
 .singleTrip {
@@ -41,6 +38,11 @@
     margin-right: auto;
 }
 
+.formStars{
+    margin-left: 40px;
+    justify-content: left;
+}
+
 .zoom {
     padding: 35px;
     transition: transform .2s; 
@@ -53,7 +55,7 @@
 
 fieldset {
     min-width: 0;
-    padding: 1rem 0;
+    padding: .5rem 0;
     margin: 0;
     border: 0;
 }
@@ -63,6 +65,7 @@ fieldset {
     width: 94%;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
+    margin: 2px;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -77,19 +80,48 @@ fieldset {
 
 .form-group {
     margin: 10px;
+    text-align: left;
 }
-
-#form-bio, #bio {
-    height:100px;
-    /* display:-webkit-box; */
-} 
 
 .tripForm {
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;    
+    width: 80%;
 }
 
-#check {
-    width: 35px;
+.filter-section {
+    display: flex;
+    flex-direction: row;  
+}
+
+.filter-control {
+    margin: 10px;
+}
+
+#firstDrop {
+    margin-left: 150px;
+}
+
+.rightBtn {
+    float: right;
+    margin-right: 100px;
+}
+
+button {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.activityButtons {
+    display: flex;
+}
+
+#ratingSection {
+    display: flex;
+}
+
+#ratingLabel {
+    padding-top: 5px;
+}
+
+.tAList {
+    margin-bottom: 20px;
 }

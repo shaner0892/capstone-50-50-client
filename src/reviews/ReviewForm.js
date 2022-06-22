@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
 import ReactStars from "react-rating-stars-component";
-import { render } from "react-dom";
+import { Button } from "reactstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getSingleActivity } from "../activities/ActivityManager";
 import { useParams } from "react-router-dom";
+import { getSingleActivity } from "../activities/ActivityManager";
 import { postReview } from "./ReviewManager";
 
 
@@ -85,7 +85,7 @@ export const ReviewActivity = () => {
                 </div>
             </fieldset>
             <div>
-                <button id="btn" outline className="btn btn-addTrip" onClick={addNewReview} >Next</button>
+                <Button id="btn" color="success" outline className="btn btn-addTrip" onClick={addNewReview} >Next</Button>
             </div>
         </form>
     )

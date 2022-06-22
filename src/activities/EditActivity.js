@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Button } from "reactstrap";
 import { getCategories } from "../trips/TripManager";
 import { getStates } from "../states/StateManager";
 import { getSingleActivity, putActivity } from './ActivityManager';
@@ -120,7 +121,7 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
                 : ""
             }
             <div>
-                <button id="btn" outline className="btn btn-editActivity" onClick={saveEditedActivity} >Save</button>
+                <Button id="btn" color="success" outline className="btn btn-editActivity" onClick={saveEditedActivity} >Save</Button>
             </div>
         </form>
         </>

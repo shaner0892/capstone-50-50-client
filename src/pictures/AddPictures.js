@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
+import { Button } from "reactstrap";
 import UploadImages from "./PhotoUpload";
 import { postTripPicture } from "./PictureManager";
+import "./Picture.css"
 
 
 export const AddPictures = () => {
@@ -31,8 +33,7 @@ export const AddPictures = () => {
             <h2 className="tripPictureForm__title">Add Pictures from your Trip</h2>
             <div className="form-group">
                 <UploadImages isTripPicture={true} obj={tripPicture} update={setTripPicture} />
-                <button id="btn" outline className="btn btn-savePic" onClick={() => history.push(`/trip-details/${tripId}`)} >Save</button><br></br>
-                <button id="btn" outline className="btn btn-skip" onClick={() => history.push(`/trip-details/${tripId}`)} >Skip</button>
+                <Button id="btn" color="success" outline onClick={() => history.push(`/trip-details/${tripId}`)} >Finish</Button><br></br>
             </div>
         </form>
     )
