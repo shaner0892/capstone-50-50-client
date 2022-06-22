@@ -55,7 +55,7 @@ export const ActivityDetails = () => {
                 {/* if staff, allow them to delete the activity */}
                 {
                     user.user?.is_staff ? <div>
-                        <Button id="btn" color="success" outline onClick={() => removeActivity(activity.id)} >Delete This Activity</Button>
+                        <Button id="btn" color="warning"  outline onClick={() => removeActivity(activity.id)} >Delete This Activity</Button>
                     </div> : ""
                 }
                 </div>

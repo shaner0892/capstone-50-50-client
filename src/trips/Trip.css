@@ -83,8 +83,12 @@ fieldset {
     text-align: left;
 }
 
+#form-about {
+    height: 100px;
+}
+
 .tripForm {
-    width: 80%;
+    width: 50%;
 }
 
 .filter-section {

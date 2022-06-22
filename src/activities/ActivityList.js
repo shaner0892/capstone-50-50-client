@@ -18,11 +18,11 @@ export const ActivityList = () => {
     const [states, setStates] = useState([])
     const [state, setState] = useState("")
     const [user, setUser] = useState({})
-
+    const [rating, setRating] = useState("")
     
     useEffect(
         () => {
-            getActivities(state, category)
+            getActivities(state, category, rating)
                 .then(setActivities)
             getCategories()
                 .then(setCategories)
@@ -31,7 +31,7 @@ export const ActivityList = () => {
             getCurrentUser()
                 .then(setUser)
         },
-        [state, category]
+        [state, category, rating]
     )
     
     return (
@@ -52,6 +52,10 @@ export const ActivityList = () => {
                     {states.map((state) => {
                         return <option value={state.id}>{state.name}</option>
                     })}
+            </select> 
+            <select className="filter-control" onChange={e => setRating("Rating")}>
+                <option value="0" >Sort By</option>
+                    <option>Rating</option>
             </select> 
         </section>
         <section className="activityList">

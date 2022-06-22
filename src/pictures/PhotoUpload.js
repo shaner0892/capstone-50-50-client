@@ -30,9 +30,6 @@ export default function UploadImages({isTripPicture, obj, update}) {
     return (
         <>
             <Button id="btn" color="success" outline type="file" onClick={showWidget} >Browse</Button>
-            {/* {
-                uploadedImages.map((img) => {return {img}} )
-            } */}
             <p>{uploadedImages ? "Photos added" : ""}</p>
         </>
     )

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
-import { getCategories, postCategory } from "./CategoryManager";
+import { deleteCategory, getCategories, postCategory } from "./CategoryManager";
 import './Category.css'
 
 // this page is only viewable by staff
 
 export const AddCategory = () => {
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial value
     const [categories, setCategories] = useState([])
-    const history = useHistory()
     
     useEffect(
         () => {
@@ -19,7 +18,7 @@ export const AddCategory = () => {
         []
     )
     
-    //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
+    //useState hook function sets the initial value of the category to an empty string, setCategory is a function you invoke later on to modify the value
     const [category, setCategory] = useState({
         name: "",
     });
@@ -41,9 +40,25 @@ export const AddCategory = () => {
             .then(()=>
                 getCategories()
                     .then(setCategories))
+                    .then(setCategory({name:""}))
+    }
+
+        //define a function to delete a dog from the user's profile
+    //invoke the DELETE method from ApiManager and then fetch the user's new list of dogs
+    const removeCategory = (id) => {
+        deleteCategory(id)
+            .then(() => getCategories()
+                .then(setCategories))
+    }
+
+    // this clears the filters when the user hits submit by resetting the state
+    const clearFilters = (evt) => {
+        evt.preventDefault()
+        setCategory({
+            name: ""
+        })
     }
     
-
     //this will be the form you display, you need to capture user input and save to new object
     return (
         <>
@@ -57,13 +72,17 @@ export const AddCategory = () => {
                     </div>
             </fieldset>
             <div>
-                <Button id="leftBtn" color="success" outline className="btn btn-addCategory" onClick={addNewCategory} >Add Category</Button>
+                <Button id="btn" color="success" outline className="btn btn-addCategory" onClick={addNewCategory} >Add</Button>
             </div>
         </form>
         <div className="categoryList">
         <h5>Category List</h5> 
         {
-            categories.map((c) => <li>{c.name}</li>)
+            categories.map((c) => {
+                return <div className="category"><li>{c.name}</li>
+                <Button id="leftBtn" color="warning"  outline onClick={() => removeCategory(c.id)} >Delete</Button>
+                </div>
+            })
             
         }
         </div>

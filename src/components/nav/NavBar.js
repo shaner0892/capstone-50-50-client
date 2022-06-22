@@ -43,7 +43,7 @@ export const NavBar = () => {
           </NavItem>
           {
             user.user?.is_staff ? <NavItem class="navBar_item">
-            <NavLink href="/add-category">Category Manager</NavLink>
+            <NavLink href="/add-category">Categories</NavLink>
           </NavItem> : ""
           }
           <NavItem class="navBar_item">

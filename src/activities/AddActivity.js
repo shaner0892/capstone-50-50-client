@@ -39,7 +39,7 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         setActivity(newActivity)
     }
 
-    // when the user submits the activity this posts it and adds the activity to the tripActivities
+    // when the user submits the activity this posts it to the database AND adds the activity to the tripActivities for the form display
     const addNewActivity = (evt) => {
         //capture the evt (event) and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
@@ -121,13 +121,20 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                     <fieldset>
                         <div className="form-group">
                             <label htmlFor="is_approved">Is this activity approved? </label>
-                            <input name="is_approved" type="checkbox" className="box" onChange={
-                                    (evt) => {
-                                        const copy = {...activity}
-                                        copy.is_approved = evt.target.checked
-                                        setActivity(copy)
-                                    }
-                                } />
+                            <input name="is_approved" type="radio" className="radio" checked={activity.is_approved} onChange={
+                                (evt) => {
+                                    const copy = {...activity}
+                                    copy.is_approved = evt.target.value
+                                    setActivity(copy)
+                                }
+                            } />Yes
+                            <input name="is_approved" type="radio" className="radio" checked={!activity.is_approved} onChange={
+                                (evt) => {
+                                    const copy = {...activity}
+                                    copy.is_approved = !evt.target.value
+                                    setActivity(copy)
+                                }
+                            } />No
                         </div>
                     </fieldset>
                 : ""

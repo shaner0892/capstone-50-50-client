@@ -12,6 +12,10 @@
     text-align: center;
 }
 
+.userInfo {
+    margin: 20px;
+}
+
 h2 {
     margin: 30px;
     font-weight: bold;
@@ -40,6 +44,10 @@ h2 {
     text-align: left;
 }
 
+#form-about {
+    height: 100px;
+}
+
 .userForm {
     width: 100%;
     display: flex;
@@ -55,7 +63,7 @@ fieldset {
 
 .picInput {
     width: 30%;
-    padding-right: 0;
+    padding: 20px;
 }
 
 .textInput {
