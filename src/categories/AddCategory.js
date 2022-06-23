@@ -36,11 +36,13 @@ export const AddCategory = () => {
         const newCategory = {
             name: category.name
         }
+        // not the ideal way to rest form input, but clearing state wouldn't work : try useRef()
+        document.getElementById("categoryForm").reset();
+        
         postCategory(newCategory)
             .then(()=>
                 getCategories()
                     .then(setCategories))
-                    .then(setCategory({name:""}))
     }
 
         //define a function to delete a dog from the user's profile
@@ -49,14 +51,6 @@ export const AddCategory = () => {
         deleteCategory(id)
             .then(() => getCategories()
                 .then(setCategories))
-    }
-
-    // this clears the filters when the user hits submit by resetting the state
-    const clearFilters = (evt) => {
-        evt.preventDefault()
-        setCategory({
-            name: ""
-        })
     }
     
     //this will be the form you display, you need to capture user input and save to new object

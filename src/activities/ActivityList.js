@@ -5,8 +5,8 @@ import ReactStars from "react-rating-stars-component";
 import { getCategories } from "../trips/TripManager";
 import { getActivities } from "./ActivityManager";
 import { getStates } from "../states/StateManager";
-import "./Activity.css"
 import { getCurrentUser } from "../users/UserManager";
+import "./Activity.css"
 
 
 export const ActivityList = () => {
@@ -63,11 +63,12 @@ export const ActivityList = () => {
         <section className="activityList">
         {
             activities.map((a) => {
-                return <section className="activity" key={`activity--${a.id}`} onClick={() => history.push(`/activity-details/${a.id}`)}> 
+                return <section className="activity" key={`activity--${a.id}`} onClick={() => history.push(`/activity-details/${a.id}`)}>
+                    <img className="activityListPic" src={a.url}/>
                     <h5><b>{a.title}</b> </h5>
-                        <div>Location: {a.city}, {a.state?.postal_abbreviation}</div>
-                        <div>Category: {a.category?.name}</div>
-                        <div>Average Rating: 
+                        {/* <div>Location: {a.city}, {a.state?.postal_abbreviation}</div> */}
+                        {/* <div>Category: {a.category?.name}</div> */}
+                        <div>
                             <ReactStars
                                 className="stars"
                                 count={5}

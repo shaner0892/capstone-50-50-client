@@ -3,26 +3,44 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ReactStars from "react-rating-stars-component";
 import { Button } from "reactstrap";
 import { getMyTrips } from "./TripManager";
+import { getStates } from "../states/StateManager";
 import "./Trip.css"
 
 
 export const MyTrips = () => {
     //use the useState hook function to set the initial value of the user's trips array
-    const [trips, setTrips] = useState([]);
+    const [trips, setTrips] = useState([])
+    const [states, setStates] = useState([])
+    const [state, setState] = useState("")
+    const [rating, setRating] = useState(0)
     const history = useHistory()
 
     useEffect(
         () => {
-            getMyTrips()
+            getMyTrips(state, rating)
                 .then(setTrips)
+            getStates()
+                .then(setStates)
         },
-        []
+        [state, rating]
     )
     
     return (
         <>
         <h2 className="pageHeader">My Trips</h2>
         <Button color="success" outline className="rightBtn" onClick={() => history.push("/add-trip")}>Add a New Trip</Button>
+        <section className="filter-section">
+            <select className="filter-control" id="firstDrop" onChange={e => setState(parseInt(e.target.value))}>
+                <option value="0" >Filter by State</option>
+                    {states.map((state) => {
+                        return <option value={state.id}>{state.name}</option>
+                    })}
+            </select> 
+            <select className="filter-control" onChange={e => setRating(parseInt(e.target.value))}>
+                <option value="0" >Sort By</option>
+                    <option value={1}>Rating</option>
+            </select> 
+        </section>
         <section className="tripList">
         {/* <h3>Completed Trips</h3> */}
         {
