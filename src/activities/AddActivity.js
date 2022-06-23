@@ -29,7 +29,8 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         state: 0,
         city: "",
         category: 0,
-        is_approved: false
+        is_approved: false,
+        url: "https://static.thenounproject.com/png/4287130-200.png"
     });
 
     // each time the user makes a change this updates state
@@ -49,7 +50,8 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             state: activity.state,
             city: activity.city,
             category: activity.category,
-            is_approved: activity.is_approved
+            is_approved: activity.is_approved,
+            url: "https://static.thenounproject.com/png/4287130-200.png"
         }
 
         postActivity(newActivity)

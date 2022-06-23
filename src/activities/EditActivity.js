@@ -51,7 +51,7 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
             city: activity.city,
             specific_location: activity.specific_location,
             category: activity.category,
-            is_approved: activity.is_approved
+            is_approved: activity.is_approved,
         }
         // bangtripRefresh toggles the set to true or false
         // setButtonPop(false) closes the popup window
@@ -102,6 +102,15 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
                             })}
                     </select> 
                 </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label> Image URL: </label>
+                    <img className="activityPic" src={activity.url}/>
+                    <input name="url" className="form-control" value={activity.url}
+                        onChange={updateActivity}
+                        /> 
+                    </div>
             </fieldset>
             {/* if the logged in user is staff they have the option to approve an activity so that it is a public option */}
             {

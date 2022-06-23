@@ -29,6 +29,10 @@ export const ActivityDetails = () => {
         },
         []
     )
+
+    const updateActivity = (id) => {
+        <EditActivity activityId={id}/>
+    }
     //define a function to delete a dog from the user's profile
     //invoke the DELETE method from ApiManager and then fetch the user's new list of dogs
     const removeActivity = (id) => {
@@ -40,6 +44,7 @@ export const ActivityDetails = () => {
         <>
             <h2>{activity.title}</h2>
             <section className="activityProfile" key={`activity--${activity.id}`}> 
+                <img className="activityPic" src={activity.url}/>
                 <div><b>Location:</b> {activity.city}, {activity.state?.postal_abbreviation}</div>
                 <div><b>Category:</b> {activity.category?.name}</div>
                 <div className="avgRating"><b>Average Rating: </b> 
@@ -55,6 +60,7 @@ export const ActivityDetails = () => {
                 {/* if staff, allow them to delete the activity */}
                 {
                     user.user?.is_staff ? <div>
+                        <Button id="btn" color="success"  outline onClick={() => updateActivity(activity.id)} >Edit This Activity</Button>
                         <Button id="btn" color="warning"  outline onClick={() => removeActivity(activity.id)} >Delete This Activity</Button>
                     </div> : ""
                 }

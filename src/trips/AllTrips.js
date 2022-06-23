@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ReactStars from "react-rating-stars-component";
 import { getTrips } from "./TripManager";
-import "./Trip.css"
 import { getStates } from "../states/StateManager";
+import "./Trip.css"
 
 
 export const AllTrips = () => {
@@ -11,16 +11,17 @@ export const AllTrips = () => {
     const [trips, setTrips] = useState([])
     const [states, setStates] = useState([])
     const [state, setState] = useState("")
+    const [rating, setRating] = useState(0)
     const history = useHistory()
-
+    
     useEffect(
         () => {
-            getTrips(state)
+            getTrips(state, rating)
                 .then(setTrips)
             getStates()
                 .then(setStates)
         },
-        [state]
+        [state, rating]
     )
     
     return (
@@ -32,6 +33,10 @@ export const AllTrips = () => {
                     {states.map((state) => {
                         return <option value={state.id}>{state.name}</option>
                     })}
+            </select> 
+            <select className="filter-control" onChange={e => setRating(parseInt(e.target.value))}>
+                <option value="0" >Sort By</option>
+                    <option value={1}>Rating</option>
             </select> 
         </section>
         <section className="tripList">

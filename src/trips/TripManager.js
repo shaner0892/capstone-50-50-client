@@ -1,9 +1,12 @@
 const API = 'http://localhost:8000'
 
-export const getTrips = (state) => {
+export const getTrips = (state, rating) => {
     let url = `${API}/trips?`
     if (state) {
-        url += `state=${state}`
+        url += `state=${state}&`
+    }
+    if (rating) {
+        url += `rating=${rating}&`
     }
     return fetch(url, {
         headers:{
@@ -13,8 +16,15 @@ export const getTrips = (state) => {
     .then((res) => res.json())
 }
 
-export const getMyTrips = () => {
-    return fetch(`${API}/trips/my_trips`, {
+export const getMyTrips = (state, rating) => {
+    let url = `${API}/trips/my_trips?`
+    if (state) {
+        url += `state=${state}&`
+    }
+    if (rating) {
+        url += `rating=${rating}&`
+    }
+    return fetch(url, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         }
