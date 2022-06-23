@@ -58,9 +58,12 @@ export const TripDetails = () => {
             <div><b>When:</b> {trip.start_date} to {trip.end_date}</div>
             <div><b>What:</b> {trip.about} </div>
             <div><b>Activities:</b>
-            {
-                trip.activities?.length > 0 ? trip.activities?.map(a => <li>{a.title}</li>) : " No activities added"
-            }
+                <article className="tripActivities">
+
+                    {
+                        trip.activities?.length > 0 ? trip.activities?.map(a => <div className="tripActivity" onClick={() => history.push(`/activity-details/${a.id}`)}>{a.title}</div>) : " No activities added"
+                    }
+                </article>
             </div>
             {/* display trip rating with stars component */}
             <div><b>Rating:</b>

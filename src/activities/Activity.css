@@ -25,7 +25,7 @@ h2 {
 .activityProfile {
     text-align: center;
     padding: 0px 20px 20px 20px;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .pageHeader {
@@ -69,6 +69,7 @@ h2 {
     margin: 10px;
     padding: 10px;
     width: fit-content;
+    max-width: 400px;
     height: 100px;
     border: black 2px solid;
     transition: transform .2s; 
@@ -91,7 +92,11 @@ h2 {
 
 .rightBtn {
     align-items: right;
-    margin-right: 100px;
+    margin-right: 150px;
+}
+
+.leftBtn {
+    float: left;
 }
 
 button {
@@ -133,10 +138,11 @@ fieldset {
     border: 0;
 }
 
-.leftBtn {
-    float: left;
-}
-
 .radio {
     margin: 10px;
+}
+
+.avgRating {
+    display: flex;
+    justify-content: center;
 }

@@ -9,7 +9,7 @@ export const getActivities = (state, category, rating) => {
         url += `category=${category}&`
     }
     if (rating) {
-        url += `rating&`
+        url += `rating=${rating}&`
     }
     return fetch(url, {
         headers:{

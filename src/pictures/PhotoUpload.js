@@ -29,8 +29,8 @@ export default function UploadImages({isTripPicture, obj, update}) {
 
     return (
         <>
-            <Button id="btn" color="success" outline type="file" onClick={showWidget} >Browse</Button>
-            <p>{uploadedImages ? "Photos added" : ""}</p>
+            <Button id="topBtn" color="success" outline type="file" onClick={showWidget} >Browse</Button>
+            <p>{uploadedImages ? "Photo(s) added" : ""}</p>
         </>
     )
 }

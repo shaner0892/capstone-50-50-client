@@ -5,7 +5,7 @@
 
 .editProfilePic {
     width: 70%;
-    height: 50%;
+    height: fit-content;
 }
 
 .userProfile {

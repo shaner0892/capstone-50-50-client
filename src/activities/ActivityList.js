@@ -18,8 +18,9 @@ export const ActivityList = () => {
     const [states, setStates] = useState([])
     const [state, setState] = useState("")
     const [user, setUser] = useState({})
-    const [rating, setRating] = useState("")
+    const [rating, setRating] = useState(0)
     
+    // monitor for changes to the filters
     useEffect(
         () => {
             getActivities(state, category, rating)
@@ -37,6 +38,7 @@ export const ActivityList = () => {
     return (
         <>
         <h2>Browse All Activities</h2> 
+        {/* only staff can add activities */}
         {
             user.user?.is_staff ? <Button color="success" outline className="rightBtn" onClick={() => history.push(`/add-activity`)}>Add Activity</Button> : ""
         }
@@ -53,9 +55,9 @@ export const ActivityList = () => {
                         return <option value={state.id}>{state.name}</option>
                     })}
             </select> 
-            <select className="filter-control" onChange={e => setRating("Rating")}>
+            <select className="filter-control" onChange={e => setRating(parseInt(e.target.value))}>
                 <option value="0" >Sort By</option>
-                    <option>Rating</option>
+                    <option value={1}>Rating</option>
             </select> 
         </section>
         <section className="activityList">

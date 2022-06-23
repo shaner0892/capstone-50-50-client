@@ -40,11 +40,10 @@ export const ActivityDetails = () => {
         <>
             <h2>{activity.title}</h2>
             <section className="activityProfile" key={`activity--${activity.id}`}> 
-                <div>Location: {activity.city}, {activity.state?.postal_abbreviation}</div>
-                <div>Category: {activity.category?.name}</div>
-                <div>Average Rating: 
+                <div><b>Location:</b> {activity.city}, {activity.state?.postal_abbreviation}</div>
+                <div><b>Category:</b> {activity.category?.name}</div>
+                <div className="avgRating"><b>Average Rating: </b> 
                     <ReactStars 
-                        className="stars"
                         count={5}
                         isHalf={true}
                         edit={false}
@@ -52,13 +51,13 @@ export const ActivityDetails = () => {
                         size={24}
                         activeColor="#ffd700"
                     />
+                </div>
                 {/* if staff, allow them to delete the activity */}
                 {
                     user.user?.is_staff ? <div>
                         <Button id="btn" color="warning"  outline onClick={() => removeActivity(activity.id)} >Delete This Activity</Button>
                     </div> : ""
                 }
-                </div>
                 <Button className="rightBtn" color="success" outline onClick={() => history.push(`/review-activity/${activity.id}`)} >Add a Review</Button>
             </section>
             {/* display reviews here */}
@@ -67,7 +66,6 @@ export const ActivityDetails = () => {
                     reviews.map((r) => {
                         return <div className="review">"{r.review}"
                             <ReactStars 
-                                className="stars"
                                 count={5}
                                 edit={false}
                                 value={r.rating}
