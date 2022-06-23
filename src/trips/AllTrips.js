@@ -7,13 +7,14 @@ import "./Trip.css"
 
 
 export const AllTrips = () => {
-    //use the useState hook function to set the initial value of the trips array
+    //use the useState hook function to set the initial values
     const [trips, setTrips] = useState([])
     const [states, setStates] = useState([])
     const [state, setState] = useState("")
     const [rating, setRating] = useState(0)
     const history = useHistory()
     
+    // monitor state and rating to filter/sort trips
     useEffect(
         () => {
             getTrips(state, rating)
@@ -44,15 +45,8 @@ export const AllTrips = () => {
             trips.map((trip) => {
                 return <section className="trip" key={`trip--${trip.id}`} onClick={() => history.push(`/trip-details/${trip.id}`)}> 
                 <h5><b>Trip to {trip.city}, {trip.state?.postal_abbreviation}</b></h5> 
-                {/* <div><b>Where:</b> {trip.city}, {trip.state?.postal_abbreviation} </div> */}
-                <div>{trip.about} </div>
-                {/* <div><b>When:</b> {trip.start_date} to {trip.end_date}</div> */}
-                <div><b>By:</b> {trip.fifty_user?.user?.username}</div>
-                {/* <div><b>Activities:</b>
-                {
-                    trip.activities?.map(a => <li>{a.title}</li>)
-                }
-                </div> */}
+                <div>{trip.about}</div>
+                <div><b>By:</b>{trip.fifty_user?.user?.username}</div>
                 <div>
                     <ReactStars 
                         count={5}

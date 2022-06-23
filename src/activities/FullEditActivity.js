@@ -6,10 +6,11 @@ import { getStates } from "../states/StateManager";
 import { getSingleActivity, putActivity } from './ActivityManager';
 import { useParams } from "react-router-dom";
 
+// this is the edit form a staff member would use from the activity details page
 
 export const FullEditActivity = () => {
 
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial values
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
     const [activity, setActivity] = useState({})
@@ -39,9 +40,9 @@ export const FullEditActivity = () => {
         setActivity(editedActivity)
     }
 
-    // when the user saves the activity this puts it and adds the activity to the tripActivities
+    // when the user saves the activity this PUTs it and adds the activity to the tripActivities
     const saveEditedActivity = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedActivity = {
@@ -54,8 +55,6 @@ export const FullEditActivity = () => {
             is_approved: activity.is_approved,
             url: activity.url
         }
-        // bangtripRefresh toggles the set to true or false
-        // setButtonPop(false) closes the popup window
         putActivity(editedActivity)
             .then(() => {
                 history.push(`/activity-details/${activityId}`)

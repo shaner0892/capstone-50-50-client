@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
 import { getSingleState, putState } from "./StateManager";
 
-// this form should only be viewable to staff
+// this form is only viewable by staff
 
 export const EditState = () => {
     //use the useState hook function to set the initial value of the new object
@@ -19,8 +19,9 @@ export const EditState = () => {
         []
     )
 
+    // when the user hits submit PUT the updated object and reroute to the homepage
     const editState = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedState = {
@@ -35,6 +36,7 @@ export const EditState = () => {
         putState(stateId, editedState)
             .then(() => history.push(`/`))
     }
+    
     //this function makes a copy of the state object and then each time the user makes a selection/input it passes it through the setState function to update the state object
     const updateState = (evt) => {
         const copy = {...state}
@@ -46,6 +48,7 @@ export const EditState = () => {
     return (
         <>
         <form className="stateForm">
+            <h2>Edit State</h2>
             <fieldset>
                 <div className="form-group">
                     <label> State Name: </label>

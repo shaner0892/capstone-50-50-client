@@ -1,4 +1,3 @@
-// will need a get pictures by trip
 const API = 'http://localhost:8000'
 
 export const getTripPictures = (tripId) => {

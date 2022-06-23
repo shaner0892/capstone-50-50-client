@@ -5,10 +5,11 @@ import { getStates } from "../states/StateManager";
 import { getSingleActivity, putActivity } from './ActivityManager';
 import { getCurrentUser } from "../users/UserManager";
 
+// this is the edit page you invoke when editing from the trip form (using the pop up window)
 
 export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRefresh}) => {
 
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial values
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
     const [activity, setActivity] = useState({})
@@ -39,9 +40,9 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
         setActivity(editedActivity)
     }
 
-    // when the user saves the activity this puts it and adds the activity to the tripActivities
+    // when the user saves the activity this PUTs it and adds the activity to the tripActivities
     const saveEditedActivity = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedActivity = {

@@ -1,11 +1,12 @@
 import React from "react"
 import USAMap from "react-usa-map"
 import { useEffect, useState } from "react"
+import Popup from "../components/Popup";
 import { getStates } from "../states/StateManager"
 import { getCurrentUser } from "../users/UserManager"
-import Popup from "../components/Popup";
 import { StateDetails } from "../states/StateDetails"
 import "./App.css"
+
 
 export const Map = () => {
     const [states, setStates] = useState([])
@@ -32,9 +33,10 @@ export const Map = () => {
     const statePopup = (stateId) => {
         setState(stateId)
         setButtonPopup(true);
-        
     }
 
+    // for each of the states check if that state is in the statesVisited array; if so it's filled blue, if not it's filled green
+    // on click set statePopup to the state id so the popup window knows which state details to display
     const stateColors = () => {
         let statesObject = {}
         // the react map template is expecting two arguments: what color to fill and what to do on click
@@ -54,6 +56,7 @@ export const Map = () => {
         <section className="homepageMap">
             <USAMap customize={stateColors()}/>
         </section>
+        {/* initially button popup is false, but when a user clicks on a state it is assigned a value triggering the popup to true/display */}
         <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
             <StateDetails stateId={state}/>
         </Popup>

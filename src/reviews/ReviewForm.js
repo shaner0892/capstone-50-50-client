@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react"
-import ReactStars from "react-rating-stars-component";
-import { Button } from "reactstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
+import { Button } from "reactstrap";
 import { getSingleActivity } from "../activities/ActivityManager";
 import { postReview } from "./ReviewManager";
 
 
-
 export const ReviewActivity = () => {
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial values
     const [activity, setActivity] = useState({})
     const [rating, setRating] = useState({})
     const {activityId} = useParams()
@@ -23,7 +22,7 @@ export const ReviewActivity = () => {
         []
     )
 
-    //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
+    //useState hook function sets the initial value of the review to the defined properties, set is a function you invoke later on to modify the values
     const [review, setReview] = useState({
         activity: activityId,
         rating: 0,
@@ -31,20 +30,20 @@ export const ReviewActivity = () => {
     });
     
     //this updates the state as the user makes changes
-    //if they add an activity the id is pushed into the trip.activity array
     const updateReviewState = (evt) => {
         const newReview = Object.assign({}, review)
         newReview[evt.target.name] = evt.target.value
         setReview(newReview)
     }
 
+    // this sets the rating; could not set evt.target.name to rating inside the stars component
     const ratingChanged = (newRating) => {
         setRating(newRating)
     }
 
-    // this posts the new activity when the user hits submit
+    // when the user hits submit, POST the new activity and reroute to the details page
     const addNewReview = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newReview = {
@@ -52,9 +51,8 @@ export const ReviewActivity = () => {
             rating: rating,
             review: review.review
         }
-
         postReview(newReview)
-            .then((res) => history.push(`/activity-details/${activityId}`))
+            .then(() => history.push(`/activity-details/${activityId}`))
     }
     
     //this will be the form you display, you need to capture user input and save to new object
@@ -72,7 +70,6 @@ export const ReviewActivity = () => {
                     </textarea>
                 </div>
             </fieldset>
-            {/* add a rating feature if the trip has been completed */}
             <fieldset>
                 <div className="form-group">
                 <h4 htmlFor="rating">Rating: </h4>

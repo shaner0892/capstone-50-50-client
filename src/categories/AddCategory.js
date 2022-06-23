@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
 import { deleteCategory, getCategories, postCategory } from "./CategoryManager";
 import './Category.css'
@@ -29,24 +28,23 @@ export const AddCategory = () => {
         setCategory(newCategory)
     }
 
+    // when the user hits submit, POST the category and get the new list of categories
     const addNewCategory = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newCategory = {
             name: category.name
         }
-        // not the ideal way to rest form input, but clearing state wouldn't work : try useRef()
+        // not the ideal way to reset form input, but clearing state wouldn't work : try useRef()
         document.getElementById("categoryForm").reset();
-        
         postCategory(newCategory)
             .then(()=>
                 getCategories()
                     .then(setCategories))
     }
 
-        //define a function to delete a dog from the user's profile
-    //invoke the DELETE method from ApiManager and then fetch the user's new list of dogs
+    //when the user hits delete invoke the DELETE method from manager and then fetch the new list of categories
     const removeCategory = (id) => {
         deleteCategory(id)
             .then(() => getCategories()

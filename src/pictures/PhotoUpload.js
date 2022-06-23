@@ -1,22 +1,20 @@
 import React, { useState } from "react"
-import { postTripPicture } from "./PictureManager"
 import { Button } from "reactstrap"
+import { postTripPicture } from "./PictureManager"
+
 
 export default function UploadImages({isTripPicture, obj, update}) {
-    // change this to an array
     const [uploadedImages, setUploadedImages] = useState("")
 
     const checkUploadResult = (resultEvent) => {
         if (resultEvent.event === "success") {
             const copy = {...obj}
             copy.url = resultEvent.info.secure_url
-            console.log(copy)
             update(copy)
             setUploadedImages(`${resultEvent.info.original_filename}.${resultEvent.info.format}`)
-            if (isTripPicture){
+            // if it is a trip picture it needs to be posted each time since multiple pictures can be added
+            if (isTripPicture) {
                 postTripPicture(copy)
-            } else {
-                
             }
         }
     }

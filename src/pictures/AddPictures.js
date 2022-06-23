@@ -5,19 +5,21 @@ import { Button } from "reactstrap";
 import UploadImages from "./PhotoUpload";
 import "./Picture.css"
 
+// when a user adds or edits a trip they are given the option to upload photos for that trip
 
 export const AddPictures = () => {
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial value
     const history = useHistory()
     const { tripId } = useParams()
 
-    //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
+    //useState hook function sets the initial value of tripPicture to the defined properties, set is a function you invoke later on to modify the values
     const [tripPicture, setTripPicture] = useState({
         trip: tripId,
         image_url: ""
     });
     
     //this will be the form you display, you need to capture user input and save to new object
+    // invoke the upload images pop up, set tripPic to true so 
     return (
         <form className="tripPictureForm">
             <h2 className="tripPictureForm__title">Add Pictures from Your Trip</h2>
