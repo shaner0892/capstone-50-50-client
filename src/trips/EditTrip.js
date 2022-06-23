@@ -175,14 +175,14 @@ export const EditTrip = () => {
                     send in the id of the activity chosen 
                     send in tripRefresh so you have the ability to update the form changes */}
                     {/* add a ternary so that only unapproved activities can be edited */}
-                    {
+                    {/* {
                         tA.is_approved ? "" : <div><Button className="btn" color="success" outline id={tA.id} onClick={(e) => {
                             e.preventDefault()
                             setButtonPopup(e.target.id)}}>Edit Activity</Button>
                             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                                 <EditActivity activityId={buttonPopup} setButtonPopUp={setButtonPopup} tripRefresh={tripRefresh} setTripRefresh={setTripRefresh} />
                             </Popup></div>
-                    }
+                    } */}
                         <Button className="btn" color="success" outline onClick={(evt) => {removeActivity(evt, tA.id)}}> Delete Activity </Button>
                         </section>}) : ""
                 }</ol>

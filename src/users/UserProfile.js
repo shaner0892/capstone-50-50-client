@@ -32,7 +32,7 @@ export const MyProfile = () => {
         <>
             {/* display user's full name, email, location, and bio
             add profile picture
-            need to add an edit and deactivate button */}
+            add an edit button */}
             <section className="userProfile">
                 <h2>{user.user?.first_name}'s Profile</h2>
                 <img className="userProfilePic" src={user.url}/>
@@ -41,9 +41,7 @@ export const MyProfile = () => {
                     <div><b>Username:</b> {user.user?.username}</div>
                     <div><b>Email:</b> {user.user?.email}</div>
                     <div><b>Location:</b> {user.location}</div>
-                    <div><b>Total Trips:</b> {trips.length}</div>
                     <div><b>About me:</b> {user.bio}</div>
-
                 </article>
                 <Button id="btn" color="success" outline onClick={() => history.push(`/my-profile/edit`)}> Edit Profile </Button>
             </section>

@@ -30,9 +30,6 @@ export const ActivityDetails = () => {
         []
     )
 
-    const updateActivity = (id) => {
-        <EditActivity activityId={id}/>
-    }
     //define a function to delete a dog from the user's profile
     //invoke the DELETE method from ApiManager and then fetch the user's new list of dogs
     const removeActivity = (id) => {
@@ -60,11 +57,11 @@ export const ActivityDetails = () => {
                 {/* if staff, allow them to delete the activity */}
                 {
                     user.user?.is_staff ? <div>
-                        <Button id="btn" color="success"  outline onClick={() => updateActivity(activity.id)} >Edit This Activity</Button>
+                        <Button id="btn" color="success"  outline onClick={() => history.push(`/edit-activity/${activity.id}`)} >Edit This Activity</Button>
                         <Button id="btn" color="warning"  outline onClick={() => removeActivity(activity.id)} >Delete This Activity</Button>
                     </div> : ""
                 }
-                <Button className="rightBtn" color="success" outline onClick={() => history.push(`/review-activity/${activity.id}`)} >Add a Review</Button>
+                <Button className="btn" color="success" outline onClick={() => history.push(`/review-activity/${activity.id}`)} >Add a Review</Button>
             </section>
             {/* display reviews here */}
             <section className="reviews">
