@@ -10,7 +10,7 @@ import { getCurrentUser } from "../users/UserManager";
 
 
 export const TripDetails = () => {
-    //use the useState hook function to set the initial value of the new object
+    //use the useState hook function to set the initial values
     const [trip, setTrip] = useState({})
     const [tripPictures, setTripPictures] = useState([])
     const [user, setUser] = useState({})
@@ -28,8 +28,8 @@ export const TripDetails = () => {
         },
         []
     )
-    //define a function to delete a trip
-    //invoke the DELETE method and then fetch the new list of trips
+
+    //invoke the DELETE method and then route them to their trip list
     const removeTrip = (id) => {
         deleteTrip(id)
             .then(()=> {
@@ -59,13 +59,12 @@ export const TripDetails = () => {
             <div><b>What:</b> {trip.about} </div>
             <div><b>Activities:</b>
                 <article className="tripActivities">
-
                     {
-                        trip.activities?.length > 0 ? trip.activities?.map(a => <div className="tripActivity" onClick={() => history.push(`/activity-details/${a.id}`)}>{a.title}</div>) : " No activities added"
+                        trip.activities?.length > 0 ? trip.activities?.map(a => <div className="tripActivity" onClick={() => history.push(`/activity-details/${a.id}`)}>{a.title}</div>) 
+                        : " No activities added"
                     }
                 </article>
             </div>
-            {/* display trip rating with stars component */}
             <div><b>Rating:</b>
                 <ReactStars 
                     count={5}
@@ -75,6 +74,7 @@ export const TripDetails = () => {
                     activeColor="#ffd700"
                 />
             </div>
+            {/* if the current user is the author of the trip, allow them to edit or delete the trip */}
             {
                 trip.fifty_user?.id === user.id ? <div>
                 <Button id="btn" color="success" outline onClick={() => history.push(`/edit-trip/${trip.id}`)}>Edit Trip</Button>

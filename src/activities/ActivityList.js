@@ -38,10 +38,11 @@ export const ActivityList = () => {
     return (
         <>
         <h2>Browse All Activities</h2> 
-        {/* only staff can add activities */}
+        {/* if the logged in user is staff, allow them to add activities */}
         {
             user.user?.is_staff ? <Button color="success" outline className="rightBtn" onClick={() => history.push(`/add-activity`)}>Add Activity</Button> : ""
         }
+        {/* add filters/sort by here; set the state from above onchange */}
         <section className="filter-section">
             <select className="filter-control" id="firstDrop" onChange={e => setCategory(parseInt(e.target.value))}>
                 <option value="0" >Filter by Category</option>
@@ -61,13 +62,12 @@ export const ActivityList = () => {
             </select> 
         </section>
         <section className="activityList">
+        {/* display all approved activities here; show picture, title, and rating */}
         {
             activities.map((a) => {
                 return <section className="activity" key={`activity--${a.id}`} onClick={() => history.push(`/activity-details/${a.id}`)}>
                     <img className="activityListPic" src={a.url}/>
                     <h5><b>{a.title}</b> </h5>
-                        {/* <div>Location: {a.city}, {a.state?.postal_abbreviation}</div> */}
-                        {/* <div>Category: {a.category?.name}</div> */}
                         <div>
                             <ReactStars
                                 className="stars"

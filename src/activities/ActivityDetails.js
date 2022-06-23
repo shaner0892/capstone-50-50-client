@@ -5,7 +5,6 @@ import ReactStars from "react-rating-stars-component";
 import { Button } from "reactstrap";
 import { getCurrentUser } from "../users/UserManager";
 import { getReviews } from "../reviews/ReviewManager";
-import { EditActivity } from "./EditActivity";
 import { deleteActivity, getSingleActivity } from "./ActivityManager";
 import "./Activity.css"
 
@@ -30,16 +29,13 @@ export const ActivityDetails = () => {
         []
     )
 
-    const updateActivity = (id) => {
-        <EditActivity activityId={id}/>
-    }
-    //define a function to delete a dog from the user's profile
-    //invoke the DELETE method from ApiManager and then fetch the user's new list of dogs
+    //invoke the DELETE method from the manager and then push to activity list
     const removeActivity = (id) => {
         deleteActivity(id)
             .then(() => history.push(`/all-activities`))
     }
     
+    // display title, picture, location, category, and avg rating
     return (
         <>
             <h2>{activity.title}</h2>
@@ -57,14 +53,14 @@ export const ActivityDetails = () => {
                         activeColor="#ffd700"
                     />
                 </div>
-                {/* if staff, allow them to delete the activity */}
+                {/* if the logged in user is staff, allow them to edit or delete the activity */}
                 {
                     user.user?.is_staff ? <div>
-                        <Button id="btn" color="success"  outline onClick={() => updateActivity(activity.id)} >Edit This Activity</Button>
+                        <Button id="btn" color="success"  outline onClick={() => history.push(`/edit-activity/${activity.id}`)} >Edit This Activity</Button>
                         <Button id="btn" color="warning"  outline onClick={() => removeActivity(activity.id)} >Delete This Activity</Button>
                     </div> : ""
                 }
-                <Button className="rightBtn" color="success" outline onClick={() => history.push(`/review-activity/${activity.id}`)} >Add a Review</Button>
+                <Button className="btn" color="success" outline onClick={() => history.push(`/review-activity/${activity.id}`)} >Add a Review</Button>
             </section>
             {/* display reviews here */}
             <section className="reviews">
@@ -83,7 +79,6 @@ export const ActivityDetails = () => {
                     })
                 }
             </section>
-
         </>
     )
 }

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { getSingleState } from "./StateManager";
-import "./State.css"
 import { getCurrentUser } from "../users/UserManager";
+import "./State.css"
 
-// this module is responsible for displaying the selected state's profile
+// this module is responsible for displaying the selected state's profile, stateId is passed in as a prop from the homepage
 
 export const StateDetails = ({stateId}) => {
     const [state, setState] = useState({})
@@ -16,20 +16,13 @@ export const StateDetails = ({stateId}) => {
         () => {
             getCurrentUser()
                 .then(setUser)
-        },
-        []
-    )
-
-    //fetch the information for the state that was clicked on
-    useEffect(
-        () => {
             getSingleState(stateId)
                 .then(setState)
         },
         []
     )
 
-    // need to display all info: capital, established, population, largest city
+    // need to display all info: capital, established, population, largest city, state flag, and edit button for staff
     return (
         <>
         <section className="stateDetails">
@@ -48,7 +41,6 @@ export const StateDetails = ({stateId}) => {
                 : ""
             }
         </section>
-
         </>
     )
 

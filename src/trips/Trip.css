@@ -1,3 +1,9 @@
+h2 {
+    text-align: center;
+    margin: 30px;
+    font-weight: bold;
+}
+
 .tripList {
     display: flex;
     flex-direction: row;
@@ -15,13 +21,6 @@
     border: black 2px solid;
     transition: transform .2s; 
     cursor: pointer;
-
-}
-
-h2 {
-    text-align: center;
-    margin: 30px;
-    font-weight: bold;
 }
 
 .singleTrip {

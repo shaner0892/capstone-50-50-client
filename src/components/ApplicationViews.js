@@ -3,7 +3,7 @@ import { Route } from "react-router-dom"
 import { ActivityDetails } from "../activities/ActivityDetails"
 import { ActivityList } from "../activities/ActivityList"
 import { AddActivity } from "../activities/AddActivity"
-import { EditActivity } from "../activities/EditActivity"
+import { FullEditActivity } from "../activities/FullEditActivity"
 import { AddCategory } from "../categories/AddCategory"
 import { AddPictures } from "../pictures/AddPictures"
 import { ReviewActivity } from "../reviews/ReviewForm"
@@ -48,9 +48,6 @@ export const ApplicationViews = () => {
             <Route path="/my-profile/edit">
                 <EditMyProfile />
             </Route>
-            <Route path="/edit-activity/:activityId(\d+)">
-                <EditActivity />
-            </Route>
             <Route path="/add-pictures/:tripId(\d+)">
                 <AddPictures />
             </Route>
@@ -73,6 +70,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/add-activity">
                 <AddActivity />
+            </Route>
+            <Route path="/edit-activity/:activityId(\d+)">
+                <FullEditActivity />
             </Route>
         </main>
     </>

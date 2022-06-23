@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react"
+import { useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
 import { getCategories } from "../trips/TripManager";
 import { getStates } from "../states/StateManager";
 import { getSingleActivity, putActivity } from './ActivityManager';
-import { getCurrentUser } from "../users/UserManager";
+import { useParams } from "react-router-dom";
 
-// this is the edit page you invoke when editing from the trip form (using the pop up window)
+// this is the edit form a staff member would use from the activity details page
 
-export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRefresh}) => {
+export const FullEditActivity = () => {
 
     //use the useState hook function to set the initial values
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
     const [activity, setActivity] = useState({})
-    const [user, setUser] = useState({})
+    const {activityId} = useParams()
+    const history = useHistory()
     
     // set state and category to the id only so you don't pass in the whole object
     useEffect(
@@ -27,8 +29,6 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
                 .then(setStates)
             getCategories()
                 .then(setCategories)
-            getCurrentUser()
-                .then(setUser)
         },
         []
     )
@@ -55,12 +55,9 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
             is_approved: activity.is_approved,
             url: activity.url
         }
-        // bangtripRefresh toggles the set to true or false
-        // setButtonPop(false) closes the popup window
         putActivity(editedActivity)
             .then(() => {
-                setTripRefresh(!tripRefresh)
-                setButtonPopUp(false)
+                history.push(`/activity-details/${activityId}`)
             })
     }
     
@@ -108,29 +105,24 @@ export const EditActivity = ({activityId, setButtonPopUp, tripRefresh, setTripRe
             <fieldset>
                 <div className="form-group">
                     <label> Image URL: </label>
-                    <img className="activityPic" src={activity.url}/>
+                    <img className="activityEditPic" src={activity.url}/>
                     <input name="url" className="form-control" value={activity.url}
                         onChange={updateActivity}
                         /> 
                     </div>
             </fieldset>
-            {/* if the logged in user is staff they have the option to approve an activity so that it is a public option */}
-            {
-                user.user?.is_staff ? 
-                    <fieldset>
-                        <div className="form-group">
-                            <label htmlFor="is_approved">Is this activity approved? </label>
-                            <input name="is_approved" checked={activity.is_approved ? "checked" : ""} type="checkbox" className="box" onChange={
-                                    (evt) => {
-                                        const copy = {...activity}
-                                        copy.is_approved = evt.target.checked
-                                        setActivity(copy)
-                                    }
-                                } />
-                        </div>
-                    </fieldset>
-                : ""
-            }
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="is_approved">Is this activity approved? </label>
+                    <input name="is_approved" checked={activity.is_approved ? "checked" : ""} type="checkbox" className="box" onChange={
+                            (evt) => {
+                                const copy = {...activity}
+                                copy.is_approved = evt.target.checked
+                                setActivity(copy)
+                            }
+                        } />
+                </div>
+            </fieldset>
             <div>
                 <Button id="btn" color="success" outline className="btn btn-editActivity" onClick={saveEditedActivity} >Save</Button>
             </div>

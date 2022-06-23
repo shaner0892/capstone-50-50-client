@@ -40,9 +40,9 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         setActivity(newActivity)
     }
 
-    // when the user submits the activity this posts it to the database AND adds the activity to the tripActivities for the form display
+    // when the user submits, POST it to the database AND add the activity to the tripActivities for the form display
     const addNewActivity = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newActivity = {
@@ -141,10 +141,11 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
                     </fieldset>
                 : ""
             }
-                <Button className="leftBtn" color="success" outline onClick={(evt) => {
-                    addNewActivity(evt) 
-                    clearFilters(evt)
-                }} >Add Activity</Button>
+            {/* on submit you post the activity, add it to the tripActivities, and clear the input fields */}
+            <Button className="leftBtn" color="success" outline onClick={(evt) => {
+                addNewActivity(evt) 
+                clearFilters(evt)
+            }} >Add Activity</Button>
         </form>
         </>
     )

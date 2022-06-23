@@ -17,7 +17,6 @@ h2 {
     padding: 10px;
     width: 20%;
     height: 260px;
-    /* border: black 2px solid; */
     transition: transform .2s; 
     cursor: pointer;
 }
@@ -29,7 +28,12 @@ h2 {
 }
 
 .activityPic {
-    width: 40%;
+    width: 25%;
+    margin: 20px;
+}
+
+.activityEditPic {
+    width: 20%;
     margin: 20px;
 }
 
@@ -41,16 +45,6 @@ h2 {
 
 .pageHeader {
     text-align: center;
-}
-
-.singleActivity {
-    text-align: center;
-}
-
-.activityPics {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
 }
 
 .undefined.react-stars {

@@ -6,7 +6,6 @@ import { getCategories, postTrip } from "./TripManager";
 import { getStates } from "../states/StateManager";
 import { getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
-// import UploadImages from "../pictures/PhotoUpload";
 
 
 export const AddTrip = () => {
@@ -16,11 +15,11 @@ export const AddTrip = () => {
     const [activities, setActivities] = useState([])
     const history = useHistory()
     const [tripActivities, setTripActivities] = useState([])
-    // const [tripPictures, setTripPictures] = useState([])
     const [rating, setRating] = useState({})
     const [category, setCategory] = useState("")
     const [state, setState] = useState("")
 
+    // monitor state and category filters for changes
     useEffect(
         () => {
             getStates()
@@ -33,7 +32,7 @@ export const AddTrip = () => {
         [state, category]
     )
 
-    //useState hook function sets the initial value of dog to the defined properties, updateDog is a function you invoke later on to modify the values
+    //useState hook function sets the initial value of the trip to the defined properties, set function modifies the values
     const [trip, setTrip] = useState({
         state: 0,
         city: "",
@@ -45,27 +44,29 @@ export const AddTrip = () => {
     });
     
     //this updates the state as the user makes changes
-    //if they add an activity the id is pushed into the trip.activity array
     const updateTripState = (evt) => {
         const newTrip = Object.assign({}, trip)
         newTrip[evt.target.name] = evt.target.value
         setTrip(newTrip)
     }
 
+    // this sets the rating; could not set evt.target.name to rating inside the stars component
     const ratingChanged = (newRating) => {
         setRating(newRating)
     }
-    //each time the user hits "add" activity we are adding the selected activity to display
+
+    //each time the user hits "add" activity we push that activity into the tripActivities array
     const pushActivity = (evt) => {
         evt.preventDefault()
+        // find the activity object that matches the selected one and assign it to a variable
         let selectedActivities = activities.filter(activity => parseInt(trip.activity) === activity.id)
         // unpacking: taking the activity you just added and adding it to the activities that were already saved
         setTripActivities([...selectedActivities, ...tripActivities])
     }
 
-    // this posts the new activity when the user hits submit
+    // when the user hits submit POST the trip and route them to the add pictures page
     const addNewTrip = (evt) => {
-        //capture the evt (event) and prevent the default (form submitted and reset) from happening
+        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newTrip = {
@@ -76,11 +77,9 @@ export const AddTrip = () => {
             end_date: trip.end_date,
             // by mapping through you change it to an array of IDs
             activity: tripActivities.map(tA => tA.id),
-            // need to capture rating
             rating: rating
         }
-
-        // ******this push doesn't work, the ID hasn't been created yet
+        // get the response from the POST so you can access the trip.id
         postTrip(newTrip)
             .then((res) => res.json())
             .then((res) => history.push(`/add-pictures/${res.id}`))
@@ -164,11 +163,9 @@ export const AddTrip = () => {
                     <Button className="btn" color="success" outline onClick={pushActivity} >Add Activity</Button><br></br>
                     <li> Create a New Activity: </li>
                     <AddActivity tripActivities={tripActivities} setTripActivities={setTripActivities} />
-                    {/* <Button id="btn" color="success" outline className="btn btn-addActivity" onClick={addActivity} >Add a New Activity</Button> */}
                 </ol>
                 </div>
             </fieldset>
-            {/* add a rating feature if the trip has been completed */}
             <fieldset>
                 <div className="form-group" id="ratingSection">
                 <h5 htmlFor="rating" id="ratingLabel">Rate Your Trip: </h5>
@@ -182,11 +179,6 @@ export const AddTrip = () => {
                     </div>
                 </div>
             </fieldset>
-            {/* <fieldset>
-                <div className="form-group">
-                    <UploadImages obj={tripPictures} update={setTripPictures} />
-                </div>
-            </fieldset> */}
             <div>
                 <Button className="btn" color="success" outline onClick={addNewTrip} >Next</Button>
             </div>
