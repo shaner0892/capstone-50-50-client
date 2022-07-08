@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import { Button } from "reactstrap";
-import { getCategories, getSingleTrip, putTrip } from "./TripManager";
+import { getCategories, getSingleTrip, putTrip, removeTripActivity } from "./TripManager";
 import { getStates } from "../states/StateManager";
 import { deleteActivity, getActivities } from "../activities/ActivityManager";
 import { AddActivity } from "../activities/AddActivity";
@@ -97,9 +97,9 @@ export const EditTrip = () => {
     }
 
     //invoke the DELETE method and then fetch the new list of activities
-    const removeActivity = (evt, id) => {
+    const removeActivity = (evt, activityId) => {
         evt.preventDefault()
-        deleteActivity(id)
+        deleteActivity(activityId)
             .then(()=> {
                 getSingleTrip(tripId)
                     .then((res) => {

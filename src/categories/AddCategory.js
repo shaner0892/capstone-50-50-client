@@ -57,7 +57,7 @@ export const AddCategory = () => {
         <form id="categoryForm">
             <fieldset>
                 <div className="form-group">
-                    <label> Add a New Category: </label>
+                    <h3> Add a New Category: </h3>
                     <input name="name" className="form-control"
                         onChange={updateCategory}
                         /> 
@@ -68,7 +68,7 @@ export const AddCategory = () => {
             </div>
         </form>
         <div className="categoryList">
-        <h5>Category List</h5> 
+        <h3><u>Category List:</u></h3> 
         {
             categories.map((c) => {
                 return <div className="category"><li>{c.name}</li>

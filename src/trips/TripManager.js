@@ -80,3 +80,12 @@ export const getCategories = () => {
     })
     .then((res) => res.json())
 }
+
+export const removeTripActivity = (activityId, tripId) => {
+    return fetch(`${API}/trips/${tripId}/remove_activity/activity=${activityId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`,
+        }
+    })
+}
