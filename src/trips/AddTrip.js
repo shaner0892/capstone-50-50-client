@@ -9,7 +9,6 @@ import { AddActivity } from "../activities/AddActivity";
 
 
 export const AddTrip = () => {
-    //use the useState hook function to set the initial value of the new object
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
     const [activities, setActivities] = useState([])
@@ -19,7 +18,6 @@ export const AddTrip = () => {
     const [category, setCategory] = useState("")
     const [state, setState] = useState("")
 
-    // monitor state and category filters for changes
     useEffect(
         () => {
             getStates()
@@ -32,7 +30,6 @@ export const AddTrip = () => {
         [state, category]
     )
 
-    //useState hook function sets the initial value of the trip to the defined properties, set function modifies the values
     const [trip, setTrip] = useState({
         state: 0,
         city: "",
@@ -66,7 +63,6 @@ export const AddTrip = () => {
 
     // when the user hits submit POST the trip and route them to the add pictures page
     const addNewTrip = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newTrip = {
