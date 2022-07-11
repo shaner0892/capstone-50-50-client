@@ -12,13 +12,11 @@ export const AddPictures = () => {
     const history = useHistory()
     const { tripId } = useParams()
 
-    //useState hook function sets the initial value of tripPicture to the defined properties, set is a function you invoke later on to modify the values
     const [tripPicture, setTripPicture] = useState({
         trip: tripId,
         image_url: ""
     });
     
-    //this will be the form you display, you need to capture user input and save to new object
     // invoke the upload images pop up, set tripPic to true so 
     return (
         <form className="tripPictureForm">

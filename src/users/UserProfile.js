@@ -4,10 +4,8 @@ import { Button } from "reactstrap";
 import { getCurrentUser } from "./UserManager";
 import "./User.css"
 
-//this module is responsible for displaying the current user's info
 
 export const MyProfile = () => {
-    //use useState to define and update user
     const [user, setUser] = useState({})
     const history = useHistory()
 
@@ -22,7 +20,6 @@ export const MyProfile = () => {
 
     return (
         <>
-            {/* display user's full name, email, location, bio, picture, and an edit button */}
             <section className="userProfile">
                 <h2>{user.user?.first_name}'s Profile</h2>
                 <img className="userProfilePic" src={user.url}/>

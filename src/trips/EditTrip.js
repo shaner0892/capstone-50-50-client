@@ -79,7 +79,6 @@ export const EditTrip = () => {
 
     // when the user hits submit PUT the trip and route them to the add pictures page
     const editTrip = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedTrip = {
@@ -109,7 +108,6 @@ export const EditTrip = () => {
             })
     }
     
-    //this will be the edit form you display, you need to capture user input and save to new object
     return (
         <>
         <form className="tripForm">

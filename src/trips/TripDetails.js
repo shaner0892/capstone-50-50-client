@@ -10,7 +10,6 @@ import { getCurrentUser } from "../users/UserManager";
 
 
 export const TripDetails = () => {
-    //use the useState hook function to set the initial values
     const [trip, setTrip] = useState({})
     const [tripPictures, setTripPictures] = useState([])
     const [user, setUser] = useState({})

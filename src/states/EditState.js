@@ -21,7 +21,6 @@ export const EditState = () => {
 
     // when the user hits submit PUT the updated object and reroute to the homepage
     const editState = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedState = {
@@ -44,7 +43,6 @@ export const EditState = () => {
         setState(copy)
     }
 
-    //this will be the form you display, you need to capture user input and save to new object
     return (
         <>
         <form className="stateForm">

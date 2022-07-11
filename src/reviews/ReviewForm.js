@@ -22,7 +22,6 @@ export const ReviewActivity = () => {
         []
     )
 
-    //useState hook function sets the initial value of the review to the defined properties, set is a function you invoke later on to modify the values
     const [review, setReview] = useState({
         activity: activityId,
         rating: 0,
@@ -43,7 +42,6 @@ export const ReviewActivity = () => {
 
     // when the user hits submit, POST the new activity and reroute to the details page
     const addNewReview = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newReview = {
@@ -55,7 +53,6 @@ export const ReviewActivity = () => {
             .then(() => history.push(`/activity-details/${activityId}`))
     }
     
-    //this will be the form you display, you need to capture user input and save to new object
     return (
         <form className="tripForm">
             <h2 className="tripForm__title">Add a Review for {activity.title}</h2>

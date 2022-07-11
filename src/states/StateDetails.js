@@ -5,7 +5,6 @@ import { getSingleState } from "./StateManager";
 import { getCurrentUser } from "../users/UserManager";
 import "./State.css"
 
-// this module is responsible for displaying the selected state's profile, stateId is passed in as a prop from the homepage
 
 export const StateDetails = ({stateId}) => {
     const [state, setState] = useState({})
@@ -22,7 +21,6 @@ export const StateDetails = ({stateId}) => {
         []
     )
 
-    // need to display all info: capital, established, population, largest city, state flag, and edit button for staff
     return (
         <>
         <section className="stateDetails">
