@@ -52,7 +52,6 @@ export const EditMyProfile = () => {
         (localStorage.removeItem("auth_token"))
 }
 
-    //this will be the form you display, you need to capture user input and update the user object
     return (
         <>
         <main style={{ textAlign: "center" }}>

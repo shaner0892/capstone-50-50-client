@@ -1,8 +1,8 @@
 import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
 import { Button } from "reactstrap";
-import "./Auth.css"
 import { loginUser } from "./AuthManager"
+import "./Auth.css"
 
 
 export const Login = () => {

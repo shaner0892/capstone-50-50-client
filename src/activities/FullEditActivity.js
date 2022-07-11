@@ -6,10 +6,8 @@ import { getStates } from "../states/StateManager";
 import { getSingleActivity, putActivity } from './ActivityManager';
 import { useParams } from "react-router-dom";
 
-// this is the edit form a staff member would use from the activity details page
 
 export const FullEditActivity = () => {
-
     //use the useState hook function to set the initial values
     const [states, setStates] = useState([])
     const [categories, setCategories] = useState([])
@@ -42,7 +40,6 @@ export const FullEditActivity = () => {
 
     // when the user saves the activity this PUTs it and adds the activity to the tripActivities
     const saveEditedActivity = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const editedActivity = {
@@ -61,7 +58,6 @@ export const FullEditActivity = () => {
             })
     }
     
-    //this will be the form you display, you need to capture user input and update the object
     return (
         <>
         <form className="activityForm">

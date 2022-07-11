@@ -81,7 +81,6 @@ export const AddTrip = () => {
             .then((res) => history.push(`/add-pictures/${res.id}`))
     }
     
-    //this will be the form you display, you need to capture user input and save to new object
     return (
         <form className="tripForm">
             <h2 className="tripForm__title">Add a Trip</h2>

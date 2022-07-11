@@ -8,7 +8,6 @@ import "./Trip.css"
 
 
 export const MyTrips = () => {
-    //use the useState hook function to set the initial values
     const [trips, setTrips] = useState([])
     const [states, setStates] = useState([])
     const [state, setState] = useState("")

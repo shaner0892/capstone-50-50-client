@@ -8,6 +8,9 @@ import './Category.css'
 export const AddCategory = () => {
     //use the useState hook function to set the initial value
     const [categories, setCategories] = useState([])
+    const [category, setCategory] = useState({
+        name: "",
+    });
     
     useEffect(
         () => {
@@ -17,11 +20,6 @@ export const AddCategory = () => {
         []
     )
     
-    //useState hook function sets the initial value of the category to an empty string, setCategory is a function you invoke later on to modify the value
-    const [category, setCategory] = useState({
-        name: "",
-    });
-
     const updateCategory = (evt) => {
         const newCategory = Object.assign({}, category)
         newCategory[evt.target.name] = evt.target.value
@@ -30,7 +28,6 @@ export const AddCategory = () => {
 
     // when the user hits submit, POST the category and get the new list of categories
     const addNewCategory = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newCategory = {
@@ -51,7 +48,6 @@ export const AddCategory = () => {
                 .then(setCategories))
     }
     
-    //this will be the form you display, you need to capture user input and save to new object
     return (
         <>
         <form id="categoryForm">

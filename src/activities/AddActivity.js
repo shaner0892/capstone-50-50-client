@@ -42,7 +42,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
 
     // when the user submits, POST it to the database AND add the activity to the tripActivities for the form display
     const addNewActivity = (evt) => {
-        //capture the event and prevent the default (form submitted and reset) from happening
         evt.preventDefault()
         //object that we want to send to our API
         const newActivity = {
@@ -62,7 +61,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
             })
     }
 
-    // this clears the filters when the user hits submit by resetting the state
     const clearFilters = (evt) => {
         evt.preventDefault()
         setActivity({
@@ -74,7 +72,6 @@ export const AddActivity = ({tripActivities, setTripActivities}) => {
         })
     }
 
-    //this will be the form you display, you need to capture user input and save to new object
     return (
         <>
         <form className="activityForm">
